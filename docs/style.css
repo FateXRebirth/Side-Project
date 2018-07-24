@@ -1,0 +1,28 @@
+h1 {
+  color: lightseagreen;
+}
+
+h1 > a:visited {
+  color: lightblue;
+}
+
+h1 > a:hover {
+  color: lightcoral;
+}
+
+p {
+  color: lightcoral;
+}
+
+p > a {
+  font-weight: bold;
+
+}
+
+p > a:visited {
+  color: lightblue;
+}
+
+p > a:hover {
+  color: lightseagreen;
+}
