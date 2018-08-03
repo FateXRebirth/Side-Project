@@ -7,7 +7,8 @@
   <title>Index</title>
   <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
-  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.js"></script>
+  <script src="app.js"></script>
   <!-- Google Tag Manager -->
   <script>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -19,16 +20,18 @@
   <!-- End Google Tag Manager -->
 </head>
 
-<body ng-app="myApp">
+<body ng-app="app">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZVL8XH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <h1>This is a example site for <a href="https://github.com/">Github</a></h1>
   <p>If you have any questions, feel free to contact me. <a href="https://github.com/FateXRebirth">This is my github</a></p>
   <h1>Hello TypeScript</h1>
-  <main ng-controller="Main">
-    <section>{{ count }}</section>
-    <button ng-click="click()"></button>
+  <main>
+    <ul class="menu">
+      <li><a href="#/home">home</a></li>
+    </ul>
+    <div ng-view></div>
   </main>
   <heros></heros>
 </body>

@@ -5,12 +5,12 @@ const Util = require('gulp-util');
 const BrowserSync = require('browser-sync').create();
 const Sass = require('gulp-sass');
 const Plumber = require('gulp-plumber');
-const If = require('gulp-if');
 const Concat = require('gulp-concat');
 const CleanCSS = require('gulp-clean-css');
 const Sourcemaps = require('gulp-sourcemaps');
 const Autoprefixer = require('gulp-autoprefixer');
 
+const If = require('gulp-if');
 const Iconfont = require('gulp-iconfont');    
 const Env = require('gulp-env');
 const Consolidate = require("gulp-consolidate");
@@ -31,15 +31,18 @@ gulp.task('serve', () => {
         server: 'docs'
     });
     gulp.watch([src + '/sass/*.scss'], gulp.series('Sass(style.css)'));
-    gulp.watch([
-        src + '/typescript/*.ts',
-        src + '/typescript/**/*.ts'
-    ], gulp.series('Compose', 'Compile'));
     gulp.watch([dest + '/*.js']).on('change', BrowserSync.reload);
     gulp.watch([dest + '/*.html']).on('change', BrowserSync.reload);
+    // gulp.watch([
+    //     src + '/ts/**/*.ts',
+    //     src + '/ts/main.ts',
+    // ], gulp.series('Compose'));
+    gulp.watch([
+        src + '/ts/app.ts',
+    ], gulp.series('Compile'));
 })
 
-// Compile Sass for main css
+// Compile Sass
 gulp.task('Sass(style.css)', () => {
     return gulp.src([src + '/sass/style.scss'])
     .pipe(Plumber(function(error) {
@@ -58,12 +61,11 @@ gulp.task('Sass(style.css)', () => {
 
 gulp.task('Compose', () => {
     return gulp.src([
-            src + '/typescript/main.ts',
-            src + '/typescript/controller/*.ts',
-            src + '/typescript/component/*.ts'
+            src + '/ts/**/*.ts',
+            src + '/ts/main.ts',
         ])
-    .pipe(Concat('script.ts'))
-    .pipe(gulp.dest(dest));
+    .pipe(Concat('app.ts'))
+    .pipe(gulp.dest(src + '/ts/'));
 });
 
 gulp.task('Compile', () => {
@@ -72,4 +74,4 @@ gulp.task('Compile', () => {
         .js.pipe(gulp.dest(dest));
 })
 
-gulp.task("default", gulp.parallel('Sass(style.css)', 'Compose', 'Compile', 'serve'));
+gulp.task("default", gulp.series('Sass(style.css)', 'Compile', 'serve'));
