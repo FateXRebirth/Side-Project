@@ -39,10 +39,7 @@ gulp.task('serve', () => {
         src + '/ts/models/*.ts',
         src + '/ts/services/*.ts',
         src + '/ts/main.ts',
-    ], gulp.series('Compose'));
-    // gulp.watch([
-    //     src + '/ts/app.ts',
-    // ], gulp.series('Compile'));
+    ], gulp.series('Compile'));
 })
 
 // Compile Sass
@@ -62,6 +59,7 @@ gulp.task('Sass(style.css)', () => {
     .pipe(BrowserSync.stream());
 })
 
+// Compose Files
 gulp.task('Compose', () => {
     return gulp.src([
         src + '/ts/controllers/*.ts',
@@ -71,15 +69,16 @@ gulp.task('Compose', () => {
         src + '/ts/main.ts',
     ])
     .pipe(Concat('app.ts'))
-    // .pipe(gulp.dest(src + '/ts/'));
+    .pipe(gulp.dest(src + '/ts/'))
     .pipe(tsProject())
     .js.pipe(gulp.dest(dest));
 });
 
-// gulp.task('Compile', () => {
-//     return tsProject.src()
-//         .pipe(tsProject())
-//         .js.pipe(gulp.dest(dest));
-// })
+// Compile TypeScript
+gulp.task('Compile', () => {
+    return tsProject.src()
+        .pipe(tsProject())
+        .js.pipe(gulp.dest(dest));
+})
 
-gulp.task("default", gulp.series('Sass(style.css)', 'Compose', 'serve'));
+gulp.task("default", gulp.series('Sass(style.css)', 'Compile', 'serve'));

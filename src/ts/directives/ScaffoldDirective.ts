@@ -1,4 +1,4 @@
-
+/// <reference path="../_all.ts" />
 module app {
   'use strict'
 
@@ -21,7 +21,7 @@ module app {
       }
 
       public link ($scope: ng.IScope, element: JQuery, attributes: ng.IAttributes): void {
-          element.text("I'm a directive")
+          element.text("I'm a Directive")
       }
 
   }
