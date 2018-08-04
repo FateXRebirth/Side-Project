@@ -33,13 +33,16 @@ gulp.task('serve', () => {
     gulp.watch([src + '/sass/*.scss'], gulp.series('Sass(style.css)'));
     gulp.watch([dest + '/*.js']).on('change', BrowserSync.reload);
     gulp.watch([dest + '/*.html']).on('change', BrowserSync.reload);
-    // gulp.watch([
-    //     src + '/ts/**/*.ts',
-    //     src + '/ts/main.ts',
-    // ], gulp.series('Compose'));
     gulp.watch([
-        src + '/ts/app.ts',
-    ], gulp.series('Compile'));
+        src + '/ts/controllers/*.ts',
+        src + '/ts/directives/*.ts',
+        src + '/ts/models/*.ts',
+        src + '/ts/services/*.ts',
+        src + '/ts/main.ts',
+    ], gulp.series('Compose'));
+    // gulp.watch([
+    //     src + '/ts/app.ts',
+    // ], gulp.series('Compile'));
 })
 
 // Compile Sass
@@ -61,17 +64,22 @@ gulp.task('Sass(style.css)', () => {
 
 gulp.task('Compose', () => {
     return gulp.src([
-            src + '/ts/**/*.ts',
-            src + '/ts/main.ts',
-        ])
+        src + '/ts/controllers/*.ts',
+        src + '/ts/directives/*.ts',
+        src + '/ts/models/*.ts',
+        src + '/ts/services/*.ts',
+        src + '/ts/main.ts',
+    ])
     .pipe(Concat('app.ts'))
-    .pipe(gulp.dest(src + '/ts/'));
+    // .pipe(gulp.dest(src + '/ts/'));
+    .pipe(tsProject())
+    .js.pipe(gulp.dest(dest));
 });
 
-gulp.task('Compile', () => {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest(dest));
-})
+// gulp.task('Compile', () => {
+//     return tsProject.src()
+//         .pipe(tsProject())
+//         .js.pipe(gulp.dest(dest));
+// })
 
-gulp.task("default", gulp.series('Sass(style.css)', 'Compile', 'serve'));
+gulp.task("default", gulp.series('Sass(style.css)', 'Compose', 'serve'));
