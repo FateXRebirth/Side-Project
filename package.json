@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/angular": "^1.6.49",
     "@types/angular-route": "^1.7.0",
+    "@types/angular-ui-router": "^1.1.40",
     "@uirouter/angularjs": "^1.0.19",
     "browser-sync": "^2.24.4",
     "del": "^3.0.0",

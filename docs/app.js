@@ -74,7 +74,7 @@ var app;
 /// <reference path="./_all.ts"/>
 (function (app) {
     'use strict';
-    var myapp = angular.module('app', ['ngRoute']);
+    var myapp = angular.module('app', ['ngRoute', 'ui.router']);
     myapp.controller('ctrl', app.ScaffoldCtrl.prototype.injection());
     myapp.service('service', app.ScaffoldService.prototype.injection());
     myapp.directive('directive', app.ScaffoldDirective.prototype.injection());
@@ -85,10 +85,25 @@ var app;
                 .when('/404', { templateUrl: 'partials/404.html' })
                 .otherwise({ redirectTo: '/404' });
         }]);
+    myapp.config(['$stateProvider', function ($stateProvider) {
+            var helloState = {
+                name: 'hello',
+                url: '/hello',
+                template: '<h3>hello world!</h3>'
+            };
+            var aboutState = {
+                name: 'about',
+                url: '/about',
+                template: '<h3>Its the UI-Router hello world app!</h3>'
+            };
+            $stateProvider.state(helloState);
+            $stateProvider.state(aboutState);
+        }]);
 })(app || (app = {}));
-//#####  include type definitions #####
+//##### include type definitions #####
 /// <reference path="../../node_modules/@types/angular/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-route/index.d.ts" />
+/// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
 //##### services #####
