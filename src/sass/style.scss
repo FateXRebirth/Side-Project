@@ -1,24 +1,21 @@
-h1 {
-  color: lightseagreen;
-  & > a {
-    &:visited {
-      color: lightblue;
-    }
-    &:hover {
-      color: lightcoral;
-    }
-  }
+@import 'variable';
+@import 'header';
+@import 'nav';
+@import 'footer';
+
+.#{$prefix}container {
+  width: 80%;
+  margin: 0 auto;
 }
 
-p {
-  color: lightcoral;
-  & > a {
-    font-weight: bold;
-    &:visited {
-      color: lightblue;
-    }
-    &:hover {
-      color: lightseagreen;
-    }
-  }
+.#{$prefix}divider {
+
+}
+
+.#{$prefix}clearFix {
+  clear: both;
+}
+
+.#{$prefix}hide {
+  display: none !important;
 }

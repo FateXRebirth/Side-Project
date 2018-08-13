@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,36 +13,65 @@
   <script src="app.js"></script>
   <!-- Google Tag Manager -->
   <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KZVL8XH');
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KZVL8XH');
   </script>
   <!-- End Google Tag Manager -->
 </head>
 
 <body ng-app="app">
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZVL8XH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZVL8XH" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <h1>This is a example site for <a href="https://github.com/">Github</a></h1>
-  <p>If you have any questions, feel free to contact me. <a href="https://github.com/FateXRebirth">This is my github</a></p>
-  <h1>Hello TypeScript</h1>
-  <main>
+
+  <header class="F-header">
+    <h1 class="title">Fate：Rebirth</h1>
+  </header>
+
+  <nav class="F-nav">
+    <section class="F-container">
+      <ul class="menu">
+        <li class="link link--reverse motto">Coding, Learning and Thinking</li>
+        <li>
+          <a class="link" href="/Home">Home</a>
+        </li>
+        <li>
+          <a class="link" href="/Skills">Skills</a>
+        </li>
+        <li>
+          <a class="link" href="/Portfolio">Portfolio</a>
+        </li>
+        <li>
+          <a class="link" href="/Articles">Articles</a>
+        </li>
+        <hr class="F-clearFix">
+      </ul>
+    </section>
+  </nav>
+
+  <main style="height: 2000px;">
     
-    <!-- <ul class="menu">
-      <li><a href="#!home">home</a></li>
-      <li><a href="#!about">about</a></li>
-    </ul>
-    <div ng-view></div> -->
-
-    <!-- <a ui-sref="hello" ui-sref-active="active">Hello</a>
-    <a ui-sref="about" ui-sref-active="active">About</a>
-    <ui-view></ui-view> -->
-
   </main>
-  <heros></heros>
+
+  <footer class="F-footer">
+    <section class="F-container">
+      Copyright <span class="copyright">&copy;</span> 2018 Kevin Peng. All rights reserved.
+    </section>
+  </footer>
 </body>
 
 </html>

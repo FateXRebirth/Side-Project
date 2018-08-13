@@ -1,0 +1,8 @@
+.#{$prefix}footer {
+  text-align: center;
+  font-weight: bold;
+  & .copyright {
+    font-size: 30px;
+    vertical-align: middle;
+  }
+}

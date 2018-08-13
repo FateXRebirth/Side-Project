@@ -78,27 +78,27 @@ var app;
     myapp.controller('ctrl', app.ScaffoldCtrl.prototype.injection());
     myapp.service('service', app.ScaffoldService.prototype.injection());
     myapp.directive('directive', app.ScaffoldDirective.prototype.injection());
-    myapp.config(['$routeProvider', function ($routeProvider) {
-            $routeProvider
-                .when('/home', { templateUrl: 'partials/home.html' })
-                .when('/about', { templateUrl: 'partials/about.html' })
-                .when('/404', { templateUrl: 'partials/404.html' })
-                .otherwise({ redirectTo: '/404' });
-        }]);
-    myapp.config(['$stateProvider', function ($stateProvider) {
-            var helloState = {
-                name: 'hello',
-                url: '/hello',
-                template: '<h3>hello world!</h3>'
-            };
-            var aboutState = {
-                name: 'about',
-                url: '/about',
-                template: '<h3>Its the UI-Router hello world app!</h3>'
-            };
-            $stateProvider.state(helloState);
-            $stateProvider.state(aboutState);
-        }]);
+    // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
+    //   $routeProvider
+    //   .when('/home', {templateUrl: 'partials/home.html'})
+    //   .when('/about', {templateUrl: 'partials/about.html'})
+    //   .when('/404', {templateUrl: 'partials/404.html'})
+    //   .otherwise({redirectTo: '/404'})
+    // }])
+    // myapp.config(['$stateProvider', function($stateProvider: ng.ui.IStateProvider) {
+    //   var helloState = {
+    //     name: 'hello',
+    //     url: '/hello',
+    //     template: '<h3>hello world!</h3>'
+    //   }
+    //   var aboutState = {
+    //     name: 'about',
+    //     url: '/about',
+    //     template: '<h3>Its the UI-Router hello world app!</h3>'
+    //   }
+    //   $stateProvider.state(helloState);
+    //   $stateProvider.state(aboutState);
+    // }])
 })(app || (app = {}));
 //##### include type definitions #####
 /// <reference path="../../node_modules/@types/angular/index.d.ts" />

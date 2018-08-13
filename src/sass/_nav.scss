@@ -1,0 +1,25 @@
+.#{$prefix}nav {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+
+  & .menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    & .link {
+      display: block;
+      float: right;
+      padding: 15px;
+      &--reverse {
+        float: left;
+      }
+      @media screen and (max-width: 900px) {
+        text-align: center;
+        width: 100%;
+        float: none;
+        padding: 15px 0px;
+      }
+    }
+  }
+}
