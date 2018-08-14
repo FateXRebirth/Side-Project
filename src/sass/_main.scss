@@ -1,0 +1,37 @@
+.#{$prefix}main {
+
+  img {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  & .article1 {
+    & .F-flex {
+      
+    }
+
+  }
+
+  & .article2 {
+    & .F-flex {
+      
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .#{$prefix}main {
+
+    img {
+      width: 100%;
+    }
+  
+    & .article1, & .article2 {
+      & .F-flex {
+        display: block;
+      }
+    }
+  }
+  
+}

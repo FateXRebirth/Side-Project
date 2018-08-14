@@ -1,0 +1,18 @@
+@mixin nCustomHr($color) {
+  margin: 0;
+  border: 0;
+  height: 1px;
+  background-color: $color;
+  color: $color;
+  /* IE6 */
+  @content;
+}
+
+@for $i from 1 through 10 {
+  $offset: 10;
+  $unit: 10px;
+  .#{$prefix}hr-#{$i*$offset} {
+      @include nCustomHr(transparent);
+      height: $i*$unit;
+  }
+}

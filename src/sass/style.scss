@@ -1,6 +1,10 @@
 @import 'variable';
+@import 'mixin';
+@import 'layout';
+@import 'form';
 @import 'header';
 @import 'nav';
+@import 'main';
 @import 'footer';
 
 .#{$prefix}container {
