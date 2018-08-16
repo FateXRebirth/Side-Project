@@ -20,60 +20,119 @@ module app {
   interface IMyScope extends ng.IScope {
     text: string;
     text2: string;
-    self: Object;
-    echo: Function;
+    self: any;
+    Echo: any;
+    vm: DirectiveController
+  }
+
+  class DirectiveController implements ng.IController {
+
+    static $inject = ["$scope", "$log"];
+
+    public $log: ng.ILogService;
+
+    constructor(protected scope: IMyScope, $log: ng.ILogService) {
+      scope.vm = this;
+      this.$log = $log;
+    }    
+
+    public Echo() {
+      console.log("Echo from directive's controller");
+    }
+
+    public ChangeText () {            
+      this.scope.text2='This text from directive\'s controller';    
+      console.log(this.scope)
+      this.$log.debug("Change from directive's controller")       
+    }
   }
 
   export class Directive implements ng.IDirective<IMyScope>{
 
-    _$log: ng.ILogService;
+    // _$log: ng.ILogService;
 
-    constructor($log: ng.ILogService) {
-      this._$log = $log;
-    }
+    // constructor($log: ng.ILogService) {
+    //   this._$log = $log;
+    // }
+
+    // bindToController: boolean = true;
+    controller = DirectiveController;
+    controllerAs: string = "Ctrl";
 
     restrict: string = 'E';
     template: string = `
-      <div> 
-        <p> binding text: {{text}}</p> 
-        <p> this scope text: {{text2}}</p> 
-        <a href="#" ng-click="echo()">Echo from scope</a> <br>
-        <a href="#" ng-click="self.echo()">Echo from this class</a> <br>
+      <div style="text-align: center"> 
+        <p> binding text: {{text}} </p> 
+        <p> this scope text: {{text2}} </p> 
+        <p> binding text throught @: {{text3}} </p> 
+        <a href="#" ng-click="Echo()">Echo from scope</a> <br>
+        <a href="#" ng-click="self.Echo()">Echo from this class</a> <br>
+        <button ng-click="Ctrl.ChangeText()">Button1</button> <br>
+        <button ng-click="vm.ChangeText()">Button2</button> <br>
+        <button ng-click="self.ChangeText()">Button3</button> <br>
       </div>`;
-    scope: {[key: string]: string } = {
-      "text": "="
+    scope: any = {
+      "text": "=",
+      "text3": "@"
     }
+
+    MyScope: any;
 
     link: ng.IDirectiveLinkFn<IMyScope> = (
       scope: IMyScope,
       element: ng.IAugmentedJQuery,
       attributes: ng.IAttributes,
+      controller: any
     ) => {
-      // this.scope.text = scope.text;
-      console.log(scope);
-      console.log(this);
-      this.scope.text = '123';
-      scope.text2 = '456';
+      console.log(scope)
+
+      this.MyScope = scope;
+
+      // this.scope = scope
+
+      // scope.vm.Echo()
+
+      scope.text2 = 'This text from scope2';
+      
+      // scope.text = 'This text from scope2';
+
       scope.self = this;
-      scope.echo = function() {
-        console.log("echo from scope")
+
+      scope.Echo = function() {
+        console.log("Echo from scope")
       }
+
+      // this.controller.prototype.Echo();
+      // console.log(this.controller.$inject)
+      // console.log(controller)
+      // console.log(this.controller)
+
+      // scope.vm.$log.debug("Echo from scope throught controller")
+      
     };
 
-    public echo() {
-      this._$log.debug("echo from $log")
-      console.log("echo from this class")
+    public Echo() {
+      console.log("Echo from this class")
+    }
+
+    public ChangeText() {
+      this.MyScope.text2 = "This text from directive";
+      console.log(this.MyScope)
+      console.log("Change from directive")       
     }
 
     public static Factory(): ng.IDirectiveFactory<IMyScope> {
-      const directive = function($log: ng.ILogService) {
-        return new Directive($log);
+      // const directive = function($log: ng.ILocationService) {
+      //   return new Directive($log);
+      // }
+
+      const directive = function() {
+        return new Directive();
       }
 
       return directive;
     }
 
-    
   }
   
 }

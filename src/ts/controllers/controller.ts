@@ -13,12 +13,13 @@ module app {
   <header class="F-header" ng-controller="controller as c">
     <h1 class="title test">Fate：Rebirth {{ count }} </h1>
     <button ng-click="c.Add()">button</button>
+    <button ng-click="event.Add()">button</button>
   </header>
   */
 
   interface IMyScope extends ng.IScope {
     count: number;
-    Add: Function;
+    Add: any;
     event: any;
   }
 
@@ -36,13 +37,13 @@ module app {
       this._$scope.count = 1;
       this._$scope.Add = function() {
         $scope.count++;
+        $log.debug("Add from scope");
       }
     }
     
-
     public Add() {
       this._$scope.count++;
-      this._$log.debug("log here");
+      this._$log.debug("Add from this class");
       $('.test').css('color', 'red');
     }
 

@@ -33,34 +33,71 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var Directive = /** @class */ (function () {
-        function Directive($log) {
-            var _this = this;
-            this.restrict = 'E';
-            this.template = "\n      <div> \n        <p> binding text: {{text}}</p> \n        <p> this scope text: {{text2}}</p> \n        <a href=\"#\" ng-click=\"echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.echo()\">Echo from this class</a> <br>\n      </div>";
-            this.scope = {
-                "text": "="
-            };
-            this.link = function (scope, element, attributes) {
-                // this.scope.text = scope.text;
-                console.log(scope);
-                console.log(_this);
-                _this.scope.text = '123';
-                scope.text2 = '456';
-                scope.self = _this;
-                scope.echo = function () {
-                    console.log("echo from scope");
-                };
-            };
-            this._$log = $log;
+    var DirectiveController = /** @class */ (function () {
+        function DirectiveController(scope, $log) {
+            this.scope = scope;
+            scope.vm = this;
+            this.$log = $log;
         }
-        Directive.prototype.echo = function () {
-            this._$log.debug("echo from $log");
-            console.log("echo from this class");
+        DirectiveController.prototype.Echo = function () {
+            console.log("Echo from directive's controller");
+        };
+        DirectiveController.prototype.ChangeText = function () {
+            this.scope.text2 = 'This text from directive\'s controller';
+            console.log(this.scope);
+            this.$log.debug("Change from directive's controller");
+        };
+        DirectiveController.$inject = ["$scope", "$log"];
+        return DirectiveController;
+    }());
+    var Directive = /** @class */ (function () {
+        function Directive() {
+            // _$log: ng.ILogService;
+            var _this = this;
+            // constructor($log: ng.ILogService) {
+            //   this._$log = $log;
+            // }
+            // bindToController: boolean = true;
+            this.controller = DirectiveController;
+            this.controllerAs = "Ctrl";
+            this.restrict = 'E';
+            this.template = "\n      <div style=\"text-align: center\"> \n        <p> binding text: {{text}} </p> \n        <p> this scope text: {{text2}} </p> \n        <p> binding text throught @: {{text3}} </p> \n        <a href=\"#\" ng-click=\"Echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.Echo()\">Echo from this class</a> <br>\n        <button ng-click=\"Ctrl.ChangeText()\">Button1</button> <br>\n        <button ng-click=\"vm.ChangeText()\">Button2</button> <br>\n        <button ng-click=\"self.ChangeText()\">Button3</button> <br>\n      </div>";
+            this.scope = {
+                "text": "=",
+                "text3": "@"
+            };
+            this.link = function (scope, element, attributes, controller) {
+                console.log(scope);
+                _this.MyScope = scope;
+                // this.scope = scope
+                // scope.vm.Echo()
+                scope.text2 = 'This text from scope2';
+                // scope.text = 'This text from scope2';
+                scope.self = _this;
+                scope.Echo = function () {
+                    console.log("Echo from scope");
+                };
+                // this.controller.prototype.Echo();
+                // console.log(this.controller.$inject)
+                // console.log(controller)
+                // console.log(this.controller)
+                // scope.vm.$log.debug("Echo from scope throught controller")
+            };
+        }
+        Directive.prototype.Echo = function () {
+            console.log("Echo from this class");
+        };
+        Directive.prototype.ChangeText = function () {
+            this.MyScope.text2 = "This text from directive";
+            console.log(this.MyScope);
+            console.log("Change from directive");
         };
         Directive.Factory = function () {
-            var directive = function ($log) {
-                return new Directive($log);
+            // const directive = function($log: ng.ILocationService) {
+            //   return new Directive($log);
+            // }
+            var directive = function () {
+                return new Directive();
             };
             return directive;
         };
@@ -81,11 +118,12 @@ var app;
             this._$scope.count = 1;
             this._$scope.Add = function () {
                 $scope.count++;
+                $log.debug("Add from scope");
             };
         }
         Controller.prototype.Add = function () {
             this._$scope.count++;
-            this._$log.debug("log here");
+            this._$log.debug("Add from this class");
             $('.test').css('color', 'red');
         };
         Controller.$inject = ['$scope', '$log'];
