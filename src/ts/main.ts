@@ -4,11 +4,9 @@ module app {
 
   var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router'])
   
-  myapp.controller('ctrl', ScaffoldCtrl.prototype.injection())
+  myapp.controller('controller', app.Controller)
 
-  myapp.service('service', ScaffoldService.prototype.injection())
-
-  myapp.directive('directive', ScaffoldDirective.prototype.injection())
+  myapp.directive('directive', app.Directive.Factory())
 
   // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
   //   $routeProvider

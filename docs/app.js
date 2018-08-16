@@ -33,41 +33,65 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var ScaffoldDirective = /** @class */ (function () {
-        function ScaffoldDirective() {
-            this.templateUrl = 'partials/templates/directive.html';
+    var Directive = /** @class */ (function () {
+        function Directive($log) {
+            var _this = this;
             this.restrict = 'E';
+            this.template = "\n      <div> \n        <p> binding text: {{text}}</p> \n        <p> this scope text: {{text2}}</p> \n        <a href=\"#\" ng-click=\"echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.echo()\">Echo from this class</a> <br>\n      </div>";
+            this.scope = {
+                "text": "="
+            };
+            this.link = function (scope, element, attributes) {
+                // this.scope.text = scope.text;
+                console.log(scope);
+                console.log(_this);
+                _this.scope.text = '123';
+                scope.text2 = '456';
+                scope.self = _this;
+                scope.echo = function () {
+                    console.log("echo from scope");
+                };
+            };
+            this._$log = $log;
         }
-        ScaffoldDirective.prototype.injection = function () {
-            return [
-                function () {
-                    return new ScaffoldDirective();
-                }
-            ];
+        Directive.prototype.echo = function () {
+            this._$log.debug("echo from $log");
+            console.log("echo from this class");
         };
-        ScaffoldDirective.prototype.link = function ($scope, element, attributes) {
-            element.text("I'm a Directive");
+        Directive.Factory = function () {
+            var directive = function ($log) {
+                return new Directive($log);
+            };
+            return directive;
         };
-        return ScaffoldDirective;
+        return Directive;
     }());
-    app.ScaffoldDirective = ScaffoldDirective;
+    app.Directive = Directive;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var ScaffoldCtrl = /** @class */ (function () {
-        function ScaffoldCtrl() {
+    var Controller = /** @class */ (function () {
+        function Controller($scope, $log) {
+            this._$scope = $scope;
+            this._$log = $log;
+            this._$scope.event = this;
+            this._$scope.count = 1;
+            this._$scope.Add = function () {
+                $scope.count++;
+            };
         }
-        ScaffoldCtrl.prototype.injection = function () {
-            return [
-                ScaffoldCtrl
-            ];
+        Controller.prototype.Add = function () {
+            this._$scope.count++;
+            this._$log.debug("log here");
+            $('.test').css('color', 'red');
         };
-        return ScaffoldCtrl;
+        Controller.$inject = ['$scope', '$log'];
+        return Controller;
     }());
-    app.ScaffoldCtrl = ScaffoldCtrl;
+    app.Controller = Controller;
 })(app || (app = {}));
 /// <reference path="./_all.ts"/>
 var app;
@@ -75,9 +99,8 @@ var app;
 (function (app) {
     'use strict';
     var myapp = angular.module('app', ['ngRoute', 'ui.router']);
-    myapp.controller('ctrl', app.ScaffoldCtrl.prototype.injection());
-    myapp.service('service', app.ScaffoldService.prototype.injection());
-    myapp.directive('directive', app.ScaffoldDirective.prototype.injection());
+    myapp.controller('controller', app.Controller);
+    myapp.directive('directive', app.Directive.Factory());
     // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
     //   $routeProvider
     //   .when('/home', {templateUrl: 'partials/home.html'})
@@ -104,13 +127,14 @@ var app;
 /// <reference path="../../node_modules/@types/angular/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-route/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
+/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
 //##### services #####
 /// <reference path='services/ScaffoldService.ts' />
 //##### directives #####
-/// <reference path='directives/ScaffoldDirective.ts' />
+/// <reference path='directives/directive.ts' />
 //##### controllers #####
-/// <reference path='controllers/ScaffoldCtrl.ts' />
+/// <reference path='controllers/controller.ts' />
 //##### app #####
 /// <reference path='main.ts' />
