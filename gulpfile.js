@@ -34,6 +34,7 @@ gulp.task('serve', () => {
     gulp.watch([dest + '/*.js']).on('change', BrowserSync.reload);
     gulp.watch([dest + '/*.html']).on('change', BrowserSync.reload);
     gulp.watch([
+        src + '/ts/components/*.ts',
         src + '/ts/controllers/*.ts',
         src + '/ts/directives/*.ts',
         src + '/ts/models/*.ts',
@@ -62,6 +63,7 @@ gulp.task('Sass(style.css)', () => {
 // Compose Files
 gulp.task('Compose', () => {
     return gulp.src([
+        src + '/ts/components/*.ts',
         src + '/ts/controllers/*.ts',
         src + '/ts/directives/*.ts',
         src + '/ts/models/*.ts',

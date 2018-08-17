@@ -8,6 +8,8 @@ module app {
 
   myapp.directive('directive', app.Directive.Factory())
 
+  myapp.component('component', app.Component.Factory());
+
   // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
   //   $routeProvider
   //   .when('/home', {templateUrl: 'partials/home.html'})

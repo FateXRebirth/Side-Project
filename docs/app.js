@@ -16,17 +16,56 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var ScaffoldService = /** @class */ (function () {
-        function ScaffoldService() {
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
+    /*
+  
+    // example
+    <component test="1+1"></component>
+    */
+    var ComponentController = /** @class */ (function () {
+        function ComponentController($element, $log) {
+            this.$element = $element;
+            this.$log = $log;
+            this.test = "test";
         }
-        ScaffoldService.prototype.injection = function () {
-            return [
-                ScaffoldService
-            ];
+        ComponentController.prototype.$onInit = function () {
+            console.log("Init Component");
         };
-        return ScaffoldService;
+        ComponentController.prototype.$onChanges = function (changesObj) {
+            console.log("Changed Obj: ");
+            console.log(changesObj);
+        };
+        ComponentController.prototype.$postLink = function () {
+            console.log(this.$element);
+        };
+        ComponentController.prototype.$onDestroy = function () { };
+        ComponentController.prototype.Echo = function () {
+            this.$log.debug("Echo from Controller through $log");
+        };
+        ComponentController.$inject = ["$element", "$log"];
+        return ComponentController;
     }());
-    app.ScaffoldService = ScaffoldService;
+    var Component = /** @class */ (function () {
+        function Component() {
+            this.bindings = {
+                test: "=" //One Way Binding
+            };
+            this.controller = ComponentController;
+            this.template = "\n        <div>\n          <span> Variable: {{ $ctrl.test }} </span>\n          <button ng-click=\"$ctrl.Echo()\">Click Me To Echo</button>\n        </div>";
+            //this.templateUrl = "/Templates/components/editUser.template.html";
+            this.transclude = false;
+        }
+        Component.Factory = function () {
+            return new Component;
+        };
+        return Component;
+    }());
+    app.Component = Component;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
@@ -52,20 +91,7 @@ var app;
     }());
     var Directive = /** @class */ (function () {
         function Directive() {
-            // _$log: ng.ILogService;
             var _this = this;
-            // constructor($log: ng.ILogService) {
-            //   this._$log = $log;
-            // }
-            // bindToController: boolean = true;
-            this.controller = DirectiveController;
-            this.controllerAs = "Ctrl";
-            this.restrict = 'E';
-            this.template = "\n      <div style=\"text-align: center\"> \n        <p> binding text: {{text}} </p> \n        <p> this scope text: {{text2}} </p> \n        <p> binding text throught @: {{text3}} </p> \n        <a href=\"#\" ng-click=\"Echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.Echo()\">Echo from this class</a> <br>\n        <button ng-click=\"Ctrl.ChangeText()\">Button1</button> <br>\n        <button ng-click=\"vm.ChangeText()\">Button2</button> <br>\n        <button ng-click=\"self.ChangeText()\">Button3</button> <br>\n      </div>";
-            this.scope = {
-                "text": "=",
-                "text3": "@"
-            };
             this.link = function (scope, element, attributes, controller) {
                 console.log(scope);
                 _this.MyScope = scope;
@@ -82,6 +108,14 @@ var app;
                 // console.log(controller)
                 // console.log(this.controller)
                 // scope.vm.$log.debug("Echo from scope throught controller")
+            };
+            this.controller = DirectiveController;
+            this.controllerAs = "Ctrl";
+            this.restrict = 'E';
+            this.template = "\n      <div style=\"text-align: center\"> \n        <p> binding text: {{text}} </p> \n        <p> this scope text: {{text2}} </p> \n        <p> binding text throught @: {{text3}} </p> \n        <a href=\"#\" ng-click=\"Echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.Echo()\">Echo from this class</a> <br>\n        <button ng-click=\"Ctrl.ChangeText()\">Button1</button> <br>\n        <button ng-click=\"vm.ChangeText()\">Button2</button> <br>\n        <button ng-click=\"self.ChangeText()\">Button3</button> <br>\n      </div>";
+            this.scope = {
+                "text": "=",
+                "text3": "@"
             };
         }
         Directive.prototype.Echo = function () {
@@ -139,6 +173,7 @@ var app;
     var myapp = angular.module('app', ['ngRoute', 'ui.router']);
     myapp.controller('controller', app.Controller);
     myapp.directive('directive', app.Directive.Factory());
+    myapp.component('component', app.Component.Factory());
     // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
     //   $routeProvider
     //   .when('/home', {templateUrl: 'partials/home.html'})
@@ -169,7 +204,9 @@ var app;
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
 //##### services #####
-/// <reference path='services/ScaffoldService.ts' />
+/// <reference path='services/service.ts' />
+//##### components #####
+/// <reference path='components/component.ts' />
 //##### directives #####
 /// <reference path='directives/directive.ts' />
 //##### controllers #####

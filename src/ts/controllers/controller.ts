@@ -27,8 +27,8 @@ module app {
 
     static $inject: string[] = ['$scope', '$log'];
     
-    private _$scope: IMyScope;
-    private _$log: ng.ILogService;
+    public _$scope: IMyScope;
+    public _$log: ng.ILogService;
     
     constructor($scope: IMyScope, $log: ng.ILogService) {
       this._$scope = $scope;

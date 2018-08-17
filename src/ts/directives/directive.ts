@@ -56,29 +56,16 @@ module app {
     // }
 
     // bindToController: boolean = true;
-    controller = DirectiveController;
-    controllerAs: string = "Ctrl";
+    public controller: any;
+    public controllerAs: string;
 
-    restrict: string = 'E';
-    template: string = `
-      <div style="text-align: center"> 
-        <p> binding text: {{text}} </p> 
-        <p> this scope text: {{text2}} </p> 
-        <p> binding text throught @: {{text3}} </p> 
-        <a href="#" ng-click="Echo()">Echo from scope</a> <br>
-        <a href="#" ng-click="self.Echo()">Echo from this class</a> <br>
-        <button ng-click="Ctrl.ChangeText()">Button1</button> <br>
-        <button ng-click="vm.ChangeText()">Button2</button> <br>
-        <button ng-click="self.ChangeText()">Button3</button> <br>
-      </div>`;
-    scope: any = {
-      "text": "=",
-      "text3": "@"
-    }
+    public restrict: string;
+    public template: string;
+    public scope: any;
 
-    MyScope: any;
+    public MyScope: any;
 
-    link: ng.IDirectiveLinkFn<IMyScope> = (
+    public link: ng.IDirectiveLinkFn<IMyScope> = (
       scope: IMyScope,
       element: ng.IAugmentedJQuery,
       attributes: ng.IAttributes,
@@ -110,6 +97,27 @@ module app {
       // scope.vm.$log.debug("Echo from scope throught controller")
       
     };
+
+    constructor() {
+      this.controller = DirectiveController;
+      this.controllerAs = "Ctrl";
+      this.restrict = 'E';
+      this.template = `
+      <div style="text-align: center"> 
+        <p> binding text: {{text}} </p> 
+        <p> this scope text: {{text2}} </p> 
+        <p> binding text throught @: {{text3}} </p> 
+        <a href="#" ng-click="Echo()">Echo from scope</a> <br>
+        <a href="#" ng-click="self.Echo()">Echo from this class</a> <br>
+        <button ng-click="Ctrl.ChangeText()">Button1</button> <br>
+        <button ng-click="vm.ChangeText()">Button2</button> <br>
+        <button ng-click="self.ChangeText()">Button3</button> <br>
+      </div>`;
+      this.scope = {
+        "text": "=",
+        "text3": "@"
+      }
+    }
 
     public Echo() {
       console.log("Echo from this class")

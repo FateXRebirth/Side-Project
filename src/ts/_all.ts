@@ -8,7 +8,10 @@
 /// <reference path='models/ScaffoldModel.ts' />
 
 //##### services #####
-/// <reference path='services/ScaffoldService.ts' />
+/// <reference path='services/service.ts' />
+
+//##### components #####
+/// <reference path='components/component.ts' />
 
 //##### directives #####
 /// <reference path='directives/directive.ts' />
