@@ -68,6 +68,51 @@ var app;
     app.Component = Component;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
+// declare var SimpleMDE: any;
+var app;
+/// <reference path="../_all.ts" />
+// declare var SimpleMDE: any;
+(function (app) {
+    'use strict';
+    var value;
+    var SimpleMDEController = /** @class */ (function () {
+        function SimpleMDEController($scope, $log) {
+            this.$scope = $scope;
+            this.$log = $log;
+            this.content = "";
+            this.$scope.event = this;
+            var elem = (document.getElementById('Editor'));
+            this.simplemde = new SimpleMDE({
+                element: elem
+            });
+        }
+        SimpleMDEController.prototype.$onInit = function () {
+            console.log("Init");
+        };
+        SimpleMDEController.prototype.$onDestroy = function () {
+            console.log("Destroy");
+        };
+        SimpleMDEController.prototype.Submit = function () {
+            console.log(this.simplemde.value());
+        };
+        SimpleMDEController.$inject = ['$scope', '$log'];
+        return SimpleMDEController;
+    }());
+    var SimpleMDEComponent = /** @class */ (function () {
+        function SimpleMDEComponent() {
+            this.bindings = {};
+            this.controller = SimpleMDEController;
+            this.templateUrl = "components/simpleMDE.html";
+            this.transclude = true;
+        }
+        SimpleMDEComponent.Factory = function () {
+            return new SimpleMDEComponent;
+        };
+        return SimpleMDEComponent;
+    }());
+    app.SimpleMDEComponent = SimpleMDEComponent;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
 var app;
 /// <reference path="../_all.ts" />
 (function (app) {
@@ -174,6 +219,7 @@ var app;
     myapp.controller('controller', app.Controller);
     myapp.directive('directive', app.Directive.Factory());
     myapp.component('component', app.Component.Factory());
+    myapp.component('simplemde', app.SimpleMDEComponent.Factory());
     // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
     //   $routeProvider
     //   .when('/home', {templateUrl: 'partials/home.html'})
@@ -201,12 +247,14 @@ var app;
 /// <reference path="../../node_modules/@types/angular-route/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
 /// <reference path="../../node_modules/@types/jquery/index.d.ts" />
+/// <reference path="../../node_modules/@types/simplemde/index.d.ts" />
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
 //##### services #####
 /// <reference path='services/service.ts' />
 //##### components #####
 /// <reference path='components/component.ts' />
+/// <reference path='components/simpleMDE.ts' />
 //##### directives #####
 /// <reference path='directives/directive.ts' />
 //##### controllers #####

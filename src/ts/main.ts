@@ -10,6 +10,8 @@ module app {
 
   myapp.component('component', app.Component.Factory());
 
+  myapp.component('simplemde', app.SimpleMDEComponent.Factory());
+
   // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
   //   $routeProvider
   //   .when('/home', {templateUrl: 'partials/home.html'})

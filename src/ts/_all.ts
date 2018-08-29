@@ -3,6 +3,7 @@
 /// <reference path="../../node_modules/@types/angular-route/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
 /// <reference path="../../node_modules/@types/jquery/index.d.ts" />
+/// <reference path="../../node_modules/@types/simplemde/index.d.ts" />
 
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
@@ -12,6 +13,7 @@
 
 //##### components #####
 /// <reference path='components/component.ts' />
+/// <reference path='components/simpleMDE.ts' />
 
 //##### directives #####
 /// <reference path='directives/directive.ts' />
