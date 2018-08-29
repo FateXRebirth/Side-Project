@@ -12,6 +12,7 @@
     "@types/angular": "^1.6.49",
     "@types/angular-route": "^1.7.0",
     "@types/angular-ui-router": "^1.1.40",
+    "@types/angularfire": "^0.8.33",
     "@types/jquery": "^3.3.5",
     "@types/simplemde": "^1.11.7",
     "@uirouter/angularjs": "^1.0.19",

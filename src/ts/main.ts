@@ -2,7 +2,7 @@
 module app {
   'use strict'
 
-  var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router'])
+  var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', "firebase"])
   
   myapp.controller('controller', app.Controller)
 

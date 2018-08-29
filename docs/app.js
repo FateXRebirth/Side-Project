@@ -74,17 +74,32 @@ var app;
 // declare var SimpleMDE: any;
 (function (app) {
     'use strict';
-    var value;
     var SimpleMDEController = /** @class */ (function () {
-        function SimpleMDEController($scope, $log) {
+        // constructor(private $scope: IMyScope, private $log: ng.ILogService, private $firebaseObject: AngularFireObjectService) {
+        function SimpleMDEController($scope, $log, $firebaseArray) {
             this.$scope = $scope;
             this.$log = $log;
-            this.content = "";
-            this.$scope.event = this;
+            this.$firebaseArray = $firebaseArray;
+            // Initialize the Firebase SDK
+            var config = {
+                apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
+                authDomain: "gallery-228f2.firebaseapp.com",
+                databaseURL: "https://gallery-228f2.firebaseio.com",
+                projectId: "gallery-228f2",
+                storageBucket: "gallery-228f2.appspot.com",
+                messagingSenderId: "39963305448"
+            };
+            firebase.initializeApp(config);
+            // Get textarea for simplemde
             var elem = (document.getElementById('Editor'));
+            // Create SimpleMDE instance
             this.simplemde = new SimpleMDE({
                 element: elem
             });
+            // Get firebase reference
+            this.ref = firebase.database().ref();
+            // console.log(this.$firebaseObject(ref))
+            console.log(this.$firebaseArray(this.ref.child("images")));
         }
         SimpleMDEController.prototype.$onInit = function () {
             console.log("Init");
@@ -95,7 +110,8 @@ var app;
         SimpleMDEController.prototype.Submit = function () {
             console.log(this.simplemde.value());
         };
-        SimpleMDEController.$inject = ['$scope', '$log'];
+        // static $inject: string[] = ['$scope', '$log', '$firebaseObject'];
+        SimpleMDEController.$inject = ['$scope', '$log', '$firebaseArray'];
         return SimpleMDEController;
     }());
     var SimpleMDEComponent = /** @class */ (function () {
@@ -215,7 +231,7 @@ var app;
 /// <reference path="./_all.ts"/>
 (function (app) {
     'use strict';
-    var myapp = angular.module('app', ['ngRoute', 'ui.router']);
+    var myapp = angular.module('app', ['ngRoute', 'ui.router', "firebase"]);
     myapp.controller('controller', app.Controller);
     myapp.directive('directive', app.Directive.Factory());
     myapp.component('component', app.Component.Factory());
@@ -248,6 +264,7 @@ var app;
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
 /// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../../node_modules/@types/simplemde/index.d.ts" />
+/// <reference path="../../node_modules/@types/angularfire/index.d.ts" />
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
 //##### services #####

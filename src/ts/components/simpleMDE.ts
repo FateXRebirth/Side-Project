@@ -5,25 +5,41 @@
 module app {
   'use strict'
 
-  var value: any;
-
+  // bypass TSLint
+  declare var firebase: any;
   interface IMyScope extends ng.IScope {
     event: any;
   }
-
   class SimpleMDEController {
-    public content: string;
     public simplemde: SimpleMDE;
+    public ref: any;
 
-    static $inject: string[] = ['$scope', '$log'];
+    // static $inject: string[] = ['$scope', '$log', '$firebaseObject'];
+    static $inject: string[] = ['$scope', '$log', '$firebaseArray'];
 
-    constructor(private $scope: IMyScope, private $log: ng.ILogService) {
-      this.content = "";
-      this.$scope.event = this;
+    // constructor(private $scope: IMyScope, private $log: ng.ILogService, private $firebaseObject: AngularFireObjectService) {
+    constructor(private $scope: IMyScope, private $log: ng.ILogService, private $firebaseArray: AngularFireArrayService) {
+      // Initialize the Firebase SDK
+      const config = {
+        apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
+        authDomain: "gallery-228f2.firebaseapp.com",
+        databaseURL: "https://gallery-228f2.firebaseio.com",
+        projectId: "gallery-228f2",
+        storageBucket: "gallery-228f2.appspot.com",
+        messagingSenderId: "39963305448"
+      };
+      firebase.initializeApp(config);
+      // Get textarea for simplemde
       var elem = <HTMLElement>(document.getElementById('Editor'));
+      // Create SimpleMDE instance
       this.simplemde = new SimpleMDE({
         element: elem
       });
+      // Get firebase reference
+      this.ref = firebase.database().ref()
+      
+      // console.log(this.$firebaseObject(ref))
+      console.log(this.$firebaseArray(this.ref.child("images")))
     }
 
     public $onInit() {
@@ -38,7 +54,6 @@ module app {
       console.log(this.simplemde.value())
     }
   }
-
   export class SimpleMDEComponent implements ng.IComponentOptions {
     public bindings: any;
     public controller: any;

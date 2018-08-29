@@ -4,6 +4,7 @@
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
 /// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../../node_modules/@types/simplemde/index.d.ts" />
+/// <reference path="../../node_modules/@types/angularfire/index.d.ts" />
 
 //##### models #####
 /// <reference path='models/ScaffoldModel.ts' />
