@@ -96,19 +96,29 @@ var app;
             this.simplemde = new SimpleMDE({
                 element: elem
             });
+            this.simplemde.value("# This is a test\n\n```sh\n$ npm install node\n$ npm install gulp -g\n$ npm install npm@next\n```");
             // Get firebase reference
             this.ref = firebase.database().ref();
-            // console.log(this.$firebaseObject(ref))
-            console.log(this.$firebaseArray(this.ref.child("images")));
+            // console.log(this.$firebaseObject(ref))     
         }
         SimpleMDEController.prototype.$onInit = function () {
+            var _this = this;
+            console.log(this.$scope.event);
             console.log("Init");
+            setTimeout(function () {
+                _this.data = _this.$firebaseArray(_this.ref.child("images"));
+            });
         };
         SimpleMDEController.prototype.$onDestroy = function () {
             console.log("Destroy");
         };
         SimpleMDEController.prototype.Submit = function () {
             console.log(this.simplemde.value());
+            this.data.$add({
+                text: this.simplemde.value()
+            }).then(function (ref) {
+                console.log(ref);
+            });
         };
         // static $inject: string[] = ['$scope', '$log', '$firebaseObject'];
         SimpleMDEController.$inject = ['$scope', '$log', '$firebaseArray'];
@@ -116,7 +126,9 @@ var app;
     }());
     var SimpleMDEComponent = /** @class */ (function () {
         function SimpleMDEComponent() {
-            this.bindings = {};
+            this.bindings = {
+                text: '=',
+            };
             this.controller = SimpleMDEController;
             this.templateUrl = "components/simpleMDE.html";
             this.transclude = true;

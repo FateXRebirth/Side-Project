@@ -13,6 +13,7 @@ module app {
   class SimpleMDEController {
     public simplemde: SimpleMDE;
     public ref: any;
+    public data: any;
 
     // static $inject: string[] = ['$scope', '$log', '$firebaseObject'];
     static $inject: string[] = ['$scope', '$log', '$firebaseArray'];
@@ -35,15 +36,18 @@ module app {
       this.simplemde = new SimpleMDE({
         element: elem
       });
+      this.simplemde.value("# This is a test\n\n```sh\n$ npm install node\n$ npm install gulp -g\n$ npm install npm@next\n```");
       // Get firebase reference
       this.ref = firebase.database().ref()
-      
-      // console.log(this.$firebaseObject(ref))
-      console.log(this.$firebaseArray(this.ref.child("images")))
+      // console.log(this.$firebaseObject(ref))     
     }
 
     public $onInit() {
+      console.log(this.$scope.event);
       console.log("Init");
+      setTimeout(() => {
+        this.data = this.$firebaseArray(this.ref.child("images"))
+      })
     }
 
     public $onDestroy() {
@@ -52,6 +56,11 @@ module app {
 
     public Submit() {
       console.log(this.simplemde.value())
+      this.data.$add({
+        text: this.simplemde.value()
+      }).then(function(ref: any) {
+        console.log(ref)
+      });
     }
   }
   export class SimpleMDEComponent implements ng.IComponentOptions {
@@ -63,7 +72,7 @@ module app {
 
     constructor() {
       this.bindings = {
-        
+        text: '=',
       }
       this.controller = SimpleMDEController;
       this.templateUrl = "components/simpleMDE.html";
