@@ -1,6 +1,11 @@
 .#{$prefix}header {
-  & .title {
-    text-align: center;
-    font-size: 3em;
+  & .logo {
+    margin: 20px;
+    font-size: 40px;
+  }
+  & .mdl-layout__drawer-button {
+    right: 0;
+    left: initial;
+    background-color: transparent;
   }
 }

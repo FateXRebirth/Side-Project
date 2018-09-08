@@ -55,7 +55,7 @@ gulp.task('Sass(style.css)', () => {
     .pipe(Autoprefixer(eval("['> 0%']")))
     .pipe(Sourcemaps.init())
     .pipe(Sourcemaps.write())
-    .pipe(CleanCSS({ compatibility: 'ie8' }))
+    // .pipe(CleanCSS({ compatibility: 'ie8' }))
     .pipe(gulp.dest(dest))
     .pipe(BrowserSync.stream());
 })
