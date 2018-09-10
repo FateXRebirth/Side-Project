@@ -3,14 +3,22 @@ module app {
   'use strict'
 
   var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', "firebase"])
+
+  myapp.component('index', app.Index.Factory());
+
+  myapp.component('articles', app.Articles.Factory());
+
+  myapp.component('about', app.About.Factory());
+
+  myapp.component('contact', app.Contact.Factory());
   
-  myapp.controller('controller', app.Controller)
+  // myapp.controller('controller', app.Controller)
 
-  myapp.directive('directive', app.Directive.Factory())
+  // myapp.directive('directive', app.Directive.Factory())
 
-  myapp.component('component', app.Component.Factory());
+  // myapp.component('component', app.Component.Factory());
 
-  myapp.component('simplemde', app.SimpleMDEComponent.Factory());
+  // myapp.component('simplemde', app.SimpleMDEComponent.Factory());
 
   // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
   //   $routeProvider
@@ -20,21 +28,40 @@ module app {
   //   .otherwise({redirectTo: '/404'})
   // }])
 
-  // myapp.config(['$stateProvider', function($stateProvider: ng.ui.IStateProvider) {
-  //   var helloState = {
-  //     name: 'hello',
-  //     url: '/hello',
-  //     template: '<h3>hello world!</h3>'
-  //   }
-  
-  //   var aboutState = {
-  //     name: 'about',
-  //     url: '/about',
-  //     template: '<h3>Its the UI-Router hello world app!</h3>'
-  //   }
+  myapp.config(['$stateProvider', '$locationProvider', function($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILocationProvider) {
+    
+    $locationProvider.html5Mode(true);
+    $locationProvider.hashPrefix('');
 
-  //   $stateProvider.state(helloState);
-  //   $stateProvider.state(aboutState);
-  // }])
+    var index = {
+      name: 'index',
+      url: '/',
+      component: 'index'
+    }
+
+    var articles = {
+      name: 'articles',
+      url: '/articles',
+      component: 'articles'
+    }
+
+    var about = {
+      name: 'about',
+      url: '/about',
+      component: 'about'
+    }
+
+    var contact = {
+      name: 'contact',
+      url: '/contact',
+      component: 'contact'
+    }
+    
+    $stateProvider.state(index);
+    $stateProvider.state(articles);
+    $stateProvider.state(about);
+    $stateProvider.state(contact);
+
+  }])
 
 }

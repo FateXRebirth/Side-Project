@@ -145,6 +145,182 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
+    var IndexController = /** @class */ (function () {
+        function IndexController($element, $log) {
+            this.$element = $element;
+            this.$log = $log;
+            this.test = "test";
+        }
+        IndexController.prototype.$onInit = function () {
+            console.log("Init Component");
+        };
+        IndexController.prototype.$onChanges = function (changesObj) {
+            console.log("Changed Obj: ");
+            console.log(changesObj);
+        };
+        IndexController.prototype.$postLink = function () {
+            console.log(this.$element);
+        };
+        IndexController.prototype.$onDestroy = function () { };
+        IndexController.prototype.Echo = function () {
+            this.$log.debug("Echo from Controller through $log");
+        };
+        IndexController.$inject = ["$element", "$log"];
+        return IndexController;
+    }());
+    var Index = /** @class */ (function () {
+        function Index() {
+            this.bindings = {
+                test: "=" //One Way Binding
+            };
+            this.controller = IndexController;
+            this.templateUrl = "components/index.html";
+            this.transclude = false;
+        }
+        Index.Factory = function () {
+            return new Index;
+        };
+        return Index;
+    }());
+    app.Index = Index;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
+    var ArticlesController = /** @class */ (function () {
+        function ArticlesController($element, $log) {
+            this.$element = $element;
+            this.$log = $log;
+            this.test = "test";
+        }
+        ArticlesController.prototype.$onInit = function () {
+            console.log("Init Component");
+        };
+        ArticlesController.prototype.$onChanges = function (changesObj) {
+            console.log("Changed Obj: ");
+            console.log(changesObj);
+        };
+        ArticlesController.prototype.$postLink = function () {
+            console.log(this.$element);
+        };
+        ArticlesController.prototype.$onDestroy = function () { };
+        ArticlesController.prototype.Echo = function () {
+            this.$log.debug("Echo from Controller through $log");
+        };
+        ArticlesController.$inject = ["$element", "$log"];
+        return ArticlesController;
+    }());
+    var Articles = /** @class */ (function () {
+        function Articles() {
+            this.bindings = {
+                test: "=" //One Way Binding
+            };
+            this.controller = ArticlesController;
+            this.templateUrl = "components/articles.html";
+            this.transclude = false;
+        }
+        Articles.Factory = function () {
+            return new Articles;
+        };
+        return Articles;
+    }());
+    app.Articles = Articles;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
+    var AboutController = /** @class */ (function () {
+        function AboutController($element, $log) {
+            this.$element = $element;
+            this.$log = $log;
+            this.test = "test";
+        }
+        AboutController.prototype.$onInit = function () {
+            console.log("Init Component");
+        };
+        AboutController.prototype.$onChanges = function (changesObj) {
+            console.log("Changed Obj: ");
+            console.log(changesObj);
+        };
+        AboutController.prototype.$postLink = function () {
+            console.log(this.$element);
+        };
+        AboutController.prototype.$onDestroy = function () { };
+        AboutController.prototype.Echo = function () {
+            this.$log.debug("Echo from Controller through $log");
+        };
+        AboutController.$inject = ["$element", "$log"];
+        return AboutController;
+    }());
+    var About = /** @class */ (function () {
+        function About() {
+            this.bindings = {
+                test: "=" //One Way Binding
+            };
+            this.controller = AboutController;
+            this.templateUrl = "components/about.html";
+            this.transclude = false;
+        }
+        About.Factory = function () {
+            return new About;
+        };
+        return About;
+    }());
+    app.About = About;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
+    var ContactController = /** @class */ (function () {
+        function ContactController($element, $log) {
+            this.$element = $element;
+            this.$log = $log;
+            this.test = "test";
+        }
+        ContactController.prototype.$onInit = function () {
+            console.log("Init Component");
+        };
+        ContactController.prototype.$onChanges = function (changesObj) {
+            console.log("Changed Obj: ");
+            console.log(changesObj);
+        };
+        ContactController.prototype.$postLink = function () {
+            console.log(this.$element);
+        };
+        ContactController.prototype.$onDestroy = function () { };
+        ContactController.prototype.Echo = function () {
+            this.$log.debug("Echo from Controller through $log");
+        };
+        ContactController.$inject = ["$element", "$log"];
+        return ContactController;
+    }());
+    var Contact = /** @class */ (function () {
+        function Contact() {
+            this.bindings = {
+                test: "=" //One Way Binding
+            };
+            this.controller = ContactController;
+            this.templateUrl = "components/contact.html";
+            this.transclude = false;
+        }
+        Contact.Factory = function () {
+            return new Contact;
+        };
+        return Contact;
+    }());
+    app.Contact = Contact;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
     var DirectiveController = /** @class */ (function () {
         function DirectiveController(scope, $log) {
             this.scope = scope;
@@ -244,10 +420,14 @@ var app;
 (function (app) {
     'use strict';
     var myapp = angular.module('app', ['ngRoute', 'ui.router', "firebase"]);
-    myapp.controller('controller', app.Controller);
-    myapp.directive('directive', app.Directive.Factory());
-    myapp.component('component', app.Component.Factory());
-    myapp.component('simplemde', app.SimpleMDEComponent.Factory());
+    myapp.component('index', app.Index.Factory());
+    myapp.component('articles', app.Articles.Factory());
+    myapp.component('about', app.About.Factory());
+    myapp.component('contact', app.Contact.Factory());
+    // myapp.controller('controller', app.Controller)
+    // myapp.directive('directive', app.Directive.Factory())
+    // myapp.component('component', app.Component.Factory());
+    // myapp.component('simplemde', app.SimpleMDEComponent.Factory());
     // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
     //   $routeProvider
     //   .when('/home', {templateUrl: 'partials/home.html'})
@@ -255,20 +435,34 @@ var app;
     //   .when('/404', {templateUrl: 'partials/404.html'})
     //   .otherwise({redirectTo: '/404'})
     // }])
-    // myapp.config(['$stateProvider', function($stateProvider: ng.ui.IStateProvider) {
-    //   var helloState = {
-    //     name: 'hello',
-    //     url: '/hello',
-    //     template: '<h3>hello world!</h3>'
-    //   }
-    //   var aboutState = {
-    //     name: 'about',
-    //     url: '/about',
-    //     template: '<h3>Its the UI-Router hello world app!</h3>'
-    //   }
-    //   $stateProvider.state(helloState);
-    //   $stateProvider.state(aboutState);
-    // }])
+    myapp.config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
+            $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix('');
+            var index = {
+                name: 'index',
+                url: '/',
+                component: 'index'
+            };
+            var articles = {
+                name: 'articles',
+                url: '/articles',
+                component: 'articles'
+            };
+            var about = {
+                name: 'about',
+                url: '/about',
+                component: 'about'
+            };
+            var contact = {
+                name: 'contact',
+                url: '/contact',
+                component: 'contact'
+            };
+            $stateProvider.state(index);
+            $stateProvider.state(articles);
+            $stateProvider.state(about);
+            $stateProvider.state(contact);
+        }]);
 })(app || (app = {}));
 //##### include type definitions #####
 /// <reference path="../../node_modules/@types/angular/index.d.ts" />
@@ -284,6 +478,10 @@ var app;
 //##### components #####
 /// <reference path='components/component.ts' />
 /// <reference path='components/simpleMDE.ts' />
+/// <reference path='components/index.ts' />
+/// <reference path='components/articles.ts' />
+/// <reference path='components/about.ts' />
+/// <reference path='components/contact.ts' />
 //##### directives #####
 /// <reference path='directives/directive.ts' />
 //##### controllers #####

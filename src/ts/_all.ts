@@ -15,6 +15,10 @@
 //##### components #####
 /// <reference path='components/component.ts' />
 /// <reference path='components/simpleMDE.ts' />
+/// <reference path='components/index.ts' />
+/// <reference path='components/articles.ts' />
+/// <reference path='components/about.ts' />
+/// <reference path='components/contact.ts' />
 
 //##### directives #####
 /// <reference path='directives/directive.ts' />
