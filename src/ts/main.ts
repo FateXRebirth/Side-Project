@@ -4,13 +4,13 @@ module app {
 
   var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', "firebase"])
 
-  myapp.component('index', app.Index.Factory());
+  // myapp.component('index', app.Index.Factory());
 
-  myapp.component('articles', app.Articles.Factory());
+  // myapp.component('articles', app.Articles.Factory());
 
-  myapp.component('about', app.About.Factory());
+  // myapp.component('about', app.About.Factory());
 
-  myapp.component('contact', app.Contact.Factory());
+  // myapp.component('contact', app.Contact.Factory());
   
   // myapp.controller('controller', app.Controller)
 
@@ -28,40 +28,40 @@ module app {
   //   .otherwise({redirectTo: '/404'})
   // }])
 
-  myapp.config(['$stateProvider', '$locationProvider', function($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILocationProvider) {
+  // myapp.config(['$stateProvider', '$locationProvider', function($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILocationProvider) {
     
-    $locationProvider.html5Mode(true);
-    $locationProvider.hashPrefix('');
+  //   $locationProvider.html5Mode(true);
+  //   $locationProvider.hashPrefix('');
 
-    var index = {
-      name: 'index',
-      url: '/',
-      component: 'index'
-    }
+  //   var index = {
+  //     name: 'index',
+  //     url: '/',
+  //     component: 'index'
+  //   }
 
-    var articles = {
-      name: 'articles',
-      url: '/articles',
-      component: 'articles'
-    }
+  //   var articles = {
+  //     name: 'articles',
+  //     url: '/articles',
+  //     component: 'articles'
+  //   }
 
-    var about = {
-      name: 'about',
-      url: '/about',
-      component: 'about'
-    }
+  //   var about = {
+  //     name: 'about',
+  //     url: '/about',
+  //     component: 'about'
+  //   }
 
-    var contact = {
-      name: 'contact',
-      url: '/contact',
-      component: 'contact'
-    }
+  //   var contact = {
+  //     name: 'contact',
+  //     url: '/contact',
+  //     component: 'contact'
+  //   }
     
-    $stateProvider.state(index);
-    $stateProvider.state(articles);
-    $stateProvider.state(about);
-    $stateProvider.state(contact);
+  //   $stateProvider.state(index);
+  //   $stateProvider.state(articles);
+  //   $stateProvider.state(about);
+  //   $stateProvider.state(contact);
 
-  }])
+  // }])
 
 }

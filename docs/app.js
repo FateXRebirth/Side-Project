@@ -4,18 +4,6 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var ScaffoldModel = /** @class */ (function () {
-        function ScaffoldModel() {
-        }
-        return ScaffoldModel;
-    }());
-    app.ScaffoldModel = ScaffoldModel;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-var app;
-/// <reference path="../_all.ts" />
-(function (app) {
-    'use strict';
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
@@ -66,79 +54,6 @@ var app;
         return Component;
     }());
     app.Component = Component;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-// declare var SimpleMDE: any;
-var app;
-/// <reference path="../_all.ts" />
-// declare var SimpleMDE: any;
-(function (app) {
-    'use strict';
-    var SimpleMDEController = /** @class */ (function () {
-        // constructor(private $scope: IMyScope, private $log: ng.ILogService, private $firebaseObject: AngularFireObjectService) {
-        function SimpleMDEController($scope, $log, $firebaseArray) {
-            this.$scope = $scope;
-            this.$log = $log;
-            this.$firebaseArray = $firebaseArray;
-            // Initialize the Firebase SDK
-            var config = {
-                apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
-                authDomain: "gallery-228f2.firebaseapp.com",
-                databaseURL: "https://gallery-228f2.firebaseio.com",
-                projectId: "gallery-228f2",
-                storageBucket: "gallery-228f2.appspot.com",
-                messagingSenderId: "39963305448"
-            };
-            firebase.initializeApp(config);
-            // Get textarea for simplemde
-            var elem = (document.getElementById('Editor'));
-            // Create SimpleMDE instance
-            this.simplemde = new SimpleMDE({
-                element: elem
-            });
-            this.simplemde.value("# This is a test\n\n```sh\n$ npm install node\n$ npm install gulp -g\n$ npm install npm@next\n```");
-            // Get firebase reference
-            this.ref = firebase.database().ref();
-            // console.log(this.$firebaseObject(ref))     
-        }
-        SimpleMDEController.prototype.$onInit = function () {
-            var _this = this;
-            console.log(this.$scope.event);
-            console.log("Init");
-            setTimeout(function () {
-                _this.data = _this.$firebaseArray(_this.ref.child("images"));
-            });
-        };
-        SimpleMDEController.prototype.$onDestroy = function () {
-            console.log("Destroy");
-        };
-        SimpleMDEController.prototype.Submit = function () {
-            console.log(this.simplemde.value());
-            this.data.$add({
-                text: this.simplemde.value()
-            }).then(function (ref) {
-                console.log(ref);
-            });
-        };
-        // static $inject: string[] = ['$scope', '$log', '$firebaseObject'];
-        SimpleMDEController.$inject = ['$scope', '$log', '$firebaseArray'];
-        return SimpleMDEController;
-    }());
-    var SimpleMDEComponent = /** @class */ (function () {
-        function SimpleMDEComponent() {
-            this.bindings = {
-                text: '=',
-            };
-            this.controller = SimpleMDEController;
-            this.templateUrl = "components/simpleMDE.html";
-            this.transclude = true;
-        }
-        SimpleMDEComponent.Factory = function () {
-            return new SimpleMDEComponent;
-        };
-        return SimpleMDEComponent;
-    }());
-    app.SimpleMDEComponent = SimpleMDEComponent;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
@@ -420,10 +335,10 @@ var app;
 (function (app) {
     'use strict';
     var myapp = angular.module('app', ['ngRoute', 'ui.router', "firebase"]);
-    myapp.component('index', app.Index.Factory());
-    myapp.component('articles', app.Articles.Factory());
-    myapp.component('about', app.About.Factory());
-    myapp.component('contact', app.Contact.Factory());
+    // myapp.component('index', app.Index.Factory());
+    // myapp.component('articles', app.Articles.Factory());
+    // myapp.component('about', app.About.Factory());
+    // myapp.component('contact', app.Contact.Factory());
     // myapp.controller('controller', app.Controller)
     // myapp.directive('directive', app.Directive.Factory())
     // myapp.component('component', app.Component.Factory());
@@ -435,49 +350,45 @@ var app;
     //   .when('/404', {templateUrl: 'partials/404.html'})
     //   .otherwise({redirectTo: '/404'})
     // }])
-    myapp.config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
-            $locationProvider.html5Mode(true);
-            $locationProvider.hashPrefix('');
-            var index = {
-                name: 'index',
-                url: '/',
-                component: 'index'
-            };
-            var articles = {
-                name: 'articles',
-                url: '/articles',
-                component: 'articles'
-            };
-            var about = {
-                name: 'about',
-                url: '/about',
-                component: 'about'
-            };
-            var contact = {
-                name: 'contact',
-                url: '/contact',
-                component: 'contact'
-            };
-            $stateProvider.state(index);
-            $stateProvider.state(articles);
-            $stateProvider.state(about);
-            $stateProvider.state(contact);
-        }]);
+    // myapp.config(['$stateProvider', '$locationProvider', function($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILocationProvider) {
+    //   $locationProvider.html5Mode(true);
+    //   $locationProvider.hashPrefix('');
+    //   var index = {
+    //     name: 'index',
+    //     url: '/',
+    //     component: 'index'
+    //   }
+    //   var articles = {
+    //     name: 'articles',
+    //     url: '/articles',
+    //     component: 'articles'
+    //   }
+    //   var about = {
+    //     name: 'about',
+    //     url: '/about',
+    //     component: 'about'
+    //   }
+    //   var contact = {
+    //     name: 'contact',
+    //     url: '/contact',
+    //     component: 'contact'
+    //   }
+    //   $stateProvider.state(index);
+    //   $stateProvider.state(articles);
+    //   $stateProvider.state(about);
+    //   $stateProvider.state(contact);
+    // }])
 })(app || (app = {}));
 //##### include type definitions #####
+/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-route/index.d.ts" />
 /// <reference path="../../node_modules/@types/angular-ui-router/index.d.ts" />
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
-/// <reference path="../../node_modules/@types/simplemde/index.d.ts" />
 /// <reference path="../../node_modules/@types/angularfire/index.d.ts" />
-//##### models #####
-/// <reference path='models/ScaffoldModel.ts' />
 //##### services #####
 /// <reference path='services/service.ts' />
 //##### components #####
 /// <reference path='components/component.ts' />
-/// <reference path='components/simpleMDE.ts' />
 /// <reference path='components/index.ts' />
 /// <reference path='components/articles.ts' />
 /// <reference path='components/about.ts' />
