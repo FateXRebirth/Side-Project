@@ -4,6 +4,8 @@ module app {
 
   var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', "firebase"])
 
+  myapp.factory('firebaseService', app.FirebaseService.Factory());
+
   // myapp.component('index', app.Index.Factory());
 
   // myapp.component('articles', app.Articles.Factory());
@@ -16,7 +18,7 @@ module app {
 
   // myapp.directive('directive', app.Directive.Factory())
 
-  // myapp.component('component', app.Component.Factory());
+  myapp.component('component', app.Component.Factory());
 
   // myapp.component('simplemde', app.SimpleMDEComponent.Factory());
 

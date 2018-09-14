@@ -7,6 +7,7 @@
 
 //##### services #####
 /// <reference path='services/service.ts' />
+/// <reference path='services/firebase.ts' />
 
 //##### components #####
 /// <reference path='components/component.ts' />

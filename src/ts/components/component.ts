@@ -11,14 +11,18 @@ module app {
   class ComponentController {
     public test: string;
 
-    static $inject: string[] = ["$element", "$log"];
+    static $inject: string[] = ["$element", "$log", "firebaseService"];
 
-    constructor(private $element: ng.IRootElementService, private $log: ng.ILogService) {
-      this.test = "test"
+    public firebaseService: any;
+
+    constructor(private $element: ng.IRootElementService, private $log: ng.ILogService, firebaseService: any) {
+      this.test = "test";
+      this.firebaseService = firebaseService;
     }
 
     public $onInit() {
       console.log("Init Component");
+      this.firebaseService.Test();
     }
 
     public $onChanges(changesObj: any) {

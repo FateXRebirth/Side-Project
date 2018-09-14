@@ -7,6 +7,39 @@ var app;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
+(function (app) {
+    'use strict';
+    var FirebaseService = /** @class */ (function () {
+        function FirebaseService($firebaseArray) {
+            this.$firebaseArray = $firebaseArray;
+            console.log("FirebaseService constructed");
+            var config = {
+                apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
+                authDomain: "gallery-228f2.firebaseapp.com",
+                databaseURL: "https://gallery-228f2.firebaseio.com",
+                projectId: "gallery-228f2",
+                storageBucket: "gallery-228f2.appspot.com",
+                messagingSenderId: "39963305448"
+            };
+            firebase.initializeApp(config);
+            this.ref = firebase.database().ref();
+        }
+        FirebaseService.prototype.Test = function () {
+            console.log("Function Test");
+            console.log(this.$firebaseArray(this.ref.child("images")));
+        };
+        FirebaseService.Factory = function () {
+            var firebase = function ($firebaseArray) {
+                return new FirebaseService($firebaseArray);
+            };
+            return firebase;
+        };
+        return FirebaseService;
+    }());
+    app.FirebaseService = FirebaseService;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
@@ -16,13 +49,15 @@ var app;
     <component test="1+1"></component>
     */
     var ComponentController = /** @class */ (function () {
-        function ComponentController($element, $log) {
+        function ComponentController($element, $log, firebaseService) {
             this.$element = $element;
             this.$log = $log;
             this.test = "test";
+            this.firebaseService = firebaseService;
         }
         ComponentController.prototype.$onInit = function () {
             console.log("Init Component");
+            this.firebaseService.Test();
         };
         ComponentController.prototype.$onChanges = function (changesObj) {
             console.log("Changed Obj: ");
@@ -35,7 +70,7 @@ var app;
         ComponentController.prototype.Echo = function () {
             this.$log.debug("Echo from Controller through $log");
         };
-        ComponentController.$inject = ["$element", "$log"];
+        ComponentController.$inject = ["$element", "$log", "firebaseService"];
         return ComponentController;
     }());
     var Component = /** @class */ (function () {
@@ -335,13 +370,14 @@ var app;
 (function (app) {
     'use strict';
     var myapp = angular.module('app', ['ngRoute', 'ui.router', "firebase"]);
+    myapp.factory('firebaseService', app.FirebaseService.Factory());
     // myapp.component('index', app.Index.Factory());
     // myapp.component('articles', app.Articles.Factory());
     // myapp.component('about', app.About.Factory());
     // myapp.component('contact', app.Contact.Factory());
     // myapp.controller('controller', app.Controller)
     // myapp.directive('directive', app.Directive.Factory())
-    // myapp.component('component', app.Component.Factory());
+    myapp.component('component', app.Component.Factory());
     // myapp.component('simplemde', app.SimpleMDEComponent.Factory());
     // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
     //   $routeProvider
@@ -387,6 +423,7 @@ var app;
 /// <reference path="../../node_modules/@types/angularfire/index.d.ts" />
 //##### services #####
 /// <reference path='services/service.ts' />
+/// <reference path='services/firebase.ts' />
 //##### components #####
 /// <reference path='components/component.ts' />
 /// <reference path='components/index.ts' />
