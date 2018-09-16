@@ -2,9 +2,11 @@
 module app {
   'use strict'
 
-  var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', "firebase"])
+  var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', 'firebase'])
 
   myapp.factory('firebaseService', app.FirebaseService.Factory());
+
+  myapp.controller('TinyMceController', app.TinymceController)
 
   // myapp.component('index', app.Index.Factory());
 

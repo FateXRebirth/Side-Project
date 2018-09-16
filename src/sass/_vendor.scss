@@ -1,24 +1,3 @@
-.CodeMirror, .CodeMirror-scroll {
-  // height: 500px;
-}
-
-.simpleMDE {
-  & .Submit {
-    z-index: 1000;
-    color: white;
-    font-size: 30px;
-    line-height: 50px;
-    width: 80%;
-    border: 1px #ccc solid;
-    background-color: lightseagreen;
-    height: 50px;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
 .portfolio-header {
   position: relative;
   background-image: url(images/header-bg.jpg);
@@ -180,7 +159,7 @@ img.article-image {
 }
 
 .portfolio-contact form {
-  max-width: 550px;
+  max-width: 600px;
   margin: auto;
 }
 

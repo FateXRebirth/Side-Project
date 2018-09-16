@@ -21,6 +21,7 @@
 
 //##### controllers #####
 /// <reference path='controllers/controller.ts' />
+/// <reference path='controllers/tinymceController.ts' />
 
 //##### app #####
 /// <reference path='main.ts' />
