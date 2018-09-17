@@ -46,19 +46,26 @@
 				<a class="mdl-navigation__link" href="contact.html">Contact</a>
 			</nav>
 		</div>
-		<main class="mdl-layout__content">
-			<ui-view></ui-view>
+		<main class="mdl-layout__content" ng-controller="ArticlesController">
+			<div class="mdl-grid portfolio-max-width">
+				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" ng-repeat="post in posts">
+					<div class="mdl-card__media">
+						<img class="article-image" src=" images/example-work01.jpg" border="0" alt="">
+					</div>
+					<div class="mdl-card__title">
+						<h2 class="mdl-card__title-text">{{ post.title }}</h2>
+					</div>
+					<div class="mdl-card__supporting-text">
+						{{ post.content }}
+					</div>
+					<div class="mdl-card__actions mdl-card--border text-right">
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="portfolio-example01.html">Edit</a>
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="portfolio-example01.html">Delete</a>
+					</div>
+				</div>
+			</div>
 			<footer class="mdl-mini-footer My-footer">
 				Copyright &copy; 2018 Kevin Peng. All rights reserved.
-				<!-- <div class="mdl-mini-footer__left-section">
-					<div class="mdl-logo">Simple portfolio website</div>
-				</div>
-				<div class="mdl-mini-footer__right-section">
-					<ul class="mdl-mini-footer__link-list">
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Privacy & Terms</a></li>
-					</ul>
-				</div> -->
 			</footer>
 		</main>
 	</div>

@@ -15,14 +15,12 @@ module app {
 
     public firebaseService: any;
 
-    constructor(private $element: ng.IRootElementService, private $log: ng.ILogService, firebaseService: any) {
+    constructor(private $element: ng.IRootElementService, private $log: ng.ILogService) {
       this.test = "test";
-      this.firebaseService = firebaseService;
     }
 
     public $onInit() {
       console.log("Init Component");
-      this.firebaseService.Test();
     }
 
     public $onChanges(changesObj: any) {

@@ -7,30 +7,37 @@ module app {
 
   export class FirebaseService {
 
-    public ref: any;
+    private ref: Firebase;
+    private posts: AngularFireArray;
     
-    constructor(private $firebaseArray: AngularFireArrayService) {
-        console.log("FirebaseService constructed")
-        const config = {
-          apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
-          authDomain: "gallery-228f2.firebaseapp.com",
-          databaseURL: "https://gallery-228f2.firebaseio.com",
-          projectId: "gallery-228f2",
-          storageBucket: "gallery-228f2.appspot.com",
-          messagingSenderId: "39963305448"
-        };
-        firebase.initializeApp(config);
-        this.ref = firebase.database().ref()
+    constructor(private $firebaseArray: AngularFireArrayService, private $firebaseObject: AngularFireObjectService) {
+      console.log("FirebaseService constructed")
+      const config = {
+        apiKey: "AIzaSyCaQnAY13Kt6aQJBD-QkOm2hymfwow85IM",
+        authDomain: "side-project-f8d62.firebaseapp.com",
+        databaseURL: "https://side-project-f8d62.firebaseio.com",
+        projectId: "side-project-f8d62",
+        storageBucket: "side-project-f8d62.appspot.com",
+        messagingSenderId: "618554667717"
+      };
+      firebase.initializeApp(config);
+      this.ref = firebase.database().ref().child("Posts")
+      this.posts = this.$firebaseArray(this.ref);
+      this.posts.$watch(function(change) {
+        console.log(change);
+      })
+      this.posts.$loaded( (result: any) => {
+        this.posts = result;
+      })
     }
-    
-    public Test() {
-      console.log("Function Test")
-      console.log(this.$firebaseArray(this.ref.child("images")))
+
+    public GetAllPosts() {
+      return this.posts;
     }
 
     public static Factory(): any {
-      const firebase = function($firebaseArray: AngularFireArrayService) {
-        return new FirebaseService($firebaseArray);
+      const firebase = function($firebaseArray: AngularFireArrayService, $firebaseObject: AngularFireObjectService) {
+        return new FirebaseService($firebaseArray, $firebaseObject);
       }
 
       return firebase;

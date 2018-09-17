@@ -11,17 +11,14 @@
 
 //##### components #####
 /// <reference path='components/component.ts' />
-/// <reference path='components/index.ts' />
-/// <reference path='components/articles.ts' />
-/// <reference path='components/about.ts' />
-/// <reference path='components/contact.ts' />
 
 //##### directives #####
 /// <reference path='directives/directive.ts' />
 
 //##### controllers #####
 /// <reference path='controllers/controller.ts' />
-/// <reference path='controllers/tinymceController.ts' />
+/// <reference path='controllers/tinymce.ts' />
+/// <reference path='controllers/articles.ts' />
 
 //##### app #####
 /// <reference path='main.ts' />

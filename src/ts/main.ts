@@ -8,6 +8,8 @@ module app {
 
   myapp.controller('TinyMceController', app.TinymceController)
 
+  myapp.controller('ArticlesController', app.ArticlesController)
+
   // myapp.component('index', app.Index.Factory());
 
   // myapp.component('articles', app.Articles.Factory());

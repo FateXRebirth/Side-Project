@@ -9,33 +9,39 @@ var app;
 var app;
 (function (app) {
     'use strict';
-    var FirebaseService = /** @class */ (function () {
-        function FirebaseService($firebaseArray) {
+    class FirebaseService {
+        constructor($firebaseArray, $firebaseObject) {
             this.$firebaseArray = $firebaseArray;
+            this.$firebaseObject = $firebaseObject;
             console.log("FirebaseService constructed");
-            var config = {
-                apiKey: "AIzaSyCYg_BmMdLvYyzrnJM7hn-YonNlaT9sKDQ",
-                authDomain: "gallery-228f2.firebaseapp.com",
-                databaseURL: "https://gallery-228f2.firebaseio.com",
-                projectId: "gallery-228f2",
-                storageBucket: "gallery-228f2.appspot.com",
-                messagingSenderId: "39963305448"
+            const config = {
+                apiKey: "AIzaSyCaQnAY13Kt6aQJBD-QkOm2hymfwow85IM",
+                authDomain: "side-project-f8d62.firebaseapp.com",
+                databaseURL: "https://side-project-f8d62.firebaseio.com",
+                projectId: "side-project-f8d62",
+                storageBucket: "side-project-f8d62.appspot.com",
+                messagingSenderId: "618554667717"
             };
             firebase.initializeApp(config);
-            this.ref = firebase.database().ref();
+            this.ref = firebase.database().ref().child("Posts");
+            this.posts = this.$firebaseArray(this.ref);
+            this.posts.$watch(function (change) {
+                console.log(change);
+            });
+            this.posts.$loaded((result) => {
+                this.posts = result;
+            });
         }
-        FirebaseService.prototype.Test = function () {
-            console.log("Function Test");
-            console.log(this.$firebaseArray(this.ref.child("images")));
-        };
-        FirebaseService.Factory = function () {
-            var firebase = function ($firebaseArray) {
-                return new FirebaseService($firebaseArray);
+        GetAllPosts() {
+            return this.posts;
+        }
+        static Factory() {
+            const firebase = function ($firebaseArray, $firebaseObject) {
+                return new FirebaseService($firebaseArray, $firebaseObject);
             };
             return firebase;
-        };
-        return FirebaseService;
-    }());
+        }
+    }
     app.FirebaseService = FirebaseService;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
@@ -48,46 +54,46 @@ var app;
     // example
     <component test="1+1"></component>
     */
-    var ComponentController = /** @class */ (function () {
-        function ComponentController($element, $log, firebaseService) {
+    class ComponentController {
+        constructor($element, $log) {
             this.$element = $element;
             this.$log = $log;
             this.test = "test";
-            this.firebaseService = firebaseService;
         }
-        ComponentController.prototype.$onInit = function () {
+        $onInit() {
             console.log("Init Component");
-            this.firebaseService.Test();
-        };
-        ComponentController.prototype.$onChanges = function (changesObj) {
+        }
+        $onChanges(changesObj) {
             console.log("Changed Obj: ");
             console.log(changesObj);
-        };
-        ComponentController.prototype.$postLink = function () {
+        }
+        $postLink() {
             console.log(this.$element);
-        };
-        ComponentController.prototype.$onDestroy = function () { };
-        ComponentController.prototype.Echo = function () {
+        }
+        $onDestroy() { }
+        Echo() {
             this.$log.debug("Echo from Controller through $log");
-        };
-        ComponentController.$inject = ["$element", "$log", "firebaseService"];
-        return ComponentController;
-    }());
-    var Component = /** @class */ (function () {
-        function Component() {
+        }
+    }
+    ComponentController.$inject = ["$element", "$log", "firebaseService"];
+    class Component {
+        constructor() {
             this.bindings = {
                 test: "=" //One Way Binding
             };
             this.controller = ComponentController;
-            this.template = "\n        <div>\n          <span> Variable: {{ $ctrl.test }} </span>\n          <button ng-click=\"$ctrl.Echo()\">Click Me To Echo</button>\n        </div>";
+            this.template = `
+        <div>
+          <span> Variable: {{ $ctrl.test }} </span>
+          <button ng-click="$ctrl.Echo()">Click Me To Echo</button>
+        </div>`;
             //this.templateUrl = "/Templates/components/editUser.template.html";
             this.transclude = false;
         }
-        Component.Factory = function () {
+        static Factory() {
             return new Component;
-        };
-        return Component;
-    }());
+        }
+    }
     app.Component = Component;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
@@ -95,210 +101,32 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var IndexController = /** @class */ (function () {
-        function IndexController($element, $log) {
-            this.$element = $element;
-            this.$log = $log;
-            this.test = "test";
-        }
-        IndexController.prototype.$onInit = function () {
-            console.log("Init Component");
-        };
-        IndexController.prototype.$onChanges = function (changesObj) {
-            console.log("Changed Obj: ");
-            console.log(changesObj);
-        };
-        IndexController.prototype.$postLink = function () {
-            console.log(this.$element);
-        };
-        IndexController.prototype.$onDestroy = function () { };
-        IndexController.prototype.Echo = function () {
-            this.$log.debug("Echo from Controller through $log");
-        };
-        IndexController.$inject = ["$element", "$log"];
-        return IndexController;
-    }());
-    var Index = /** @class */ (function () {
-        function Index() {
-            this.bindings = {
-                test: "=" //One Way Binding
-            };
-            this.controller = IndexController;
-            this.templateUrl = "components/index.html";
-            this.transclude = false;
-        }
-        Index.Factory = function () {
-            return new Index;
-        };
-        return Index;
-    }());
-    app.Index = Index;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-var app;
-/// <reference path="../_all.ts" />
-(function (app) {
-    'use strict';
-    var ArticlesController = /** @class */ (function () {
-        function ArticlesController($element, $log) {
-            this.$element = $element;
-            this.$log = $log;
-            this.test = "test";
-        }
-        ArticlesController.prototype.$onInit = function () {
-            console.log("Init Component");
-        };
-        ArticlesController.prototype.$onChanges = function (changesObj) {
-            console.log("Changed Obj: ");
-            console.log(changesObj);
-        };
-        ArticlesController.prototype.$postLink = function () {
-            console.log(this.$element);
-        };
-        ArticlesController.prototype.$onDestroy = function () { };
-        ArticlesController.prototype.Echo = function () {
-            this.$log.debug("Echo from Controller through $log");
-        };
-        ArticlesController.$inject = ["$element", "$log"];
-        return ArticlesController;
-    }());
-    var Articles = /** @class */ (function () {
-        function Articles() {
-            this.bindings = {
-                test: "=" //One Way Binding
-            };
-            this.controller = ArticlesController;
-            this.templateUrl = "components/articles.html";
-            this.transclude = false;
-        }
-        Articles.Factory = function () {
-            return new Articles;
-        };
-        return Articles;
-    }());
-    app.Articles = Articles;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-var app;
-/// <reference path="../_all.ts" />
-(function (app) {
-    'use strict';
-    var AboutController = /** @class */ (function () {
-        function AboutController($element, $log) {
-            this.$element = $element;
-            this.$log = $log;
-            this.test = "test";
-        }
-        AboutController.prototype.$onInit = function () {
-            console.log("Init Component");
-        };
-        AboutController.prototype.$onChanges = function (changesObj) {
-            console.log("Changed Obj: ");
-            console.log(changesObj);
-        };
-        AboutController.prototype.$postLink = function () {
-            console.log(this.$element);
-        };
-        AboutController.prototype.$onDestroy = function () { };
-        AboutController.prototype.Echo = function () {
-            this.$log.debug("Echo from Controller through $log");
-        };
-        AboutController.$inject = ["$element", "$log"];
-        return AboutController;
-    }());
-    var About = /** @class */ (function () {
-        function About() {
-            this.bindings = {
-                test: "=" //One Way Binding
-            };
-            this.controller = AboutController;
-            this.templateUrl = "components/about.html";
-            this.transclude = false;
-        }
-        About.Factory = function () {
-            return new About;
-        };
-        return About;
-    }());
-    app.About = About;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-var app;
-/// <reference path="../_all.ts" />
-(function (app) {
-    'use strict';
-    var ContactController = /** @class */ (function () {
-        function ContactController($element, $log) {
-            this.$element = $element;
-            this.$log = $log;
-            this.test = "test";
-        }
-        ContactController.prototype.$onInit = function () {
-            console.log("Init Component");
-        };
-        ContactController.prototype.$onChanges = function (changesObj) {
-            console.log("Changed Obj: ");
-            console.log(changesObj);
-        };
-        ContactController.prototype.$postLink = function () {
-            console.log(this.$element);
-        };
-        ContactController.prototype.$onDestroy = function () { };
-        ContactController.prototype.Echo = function () {
-            this.$log.debug("Echo from Controller through $log");
-        };
-        ContactController.$inject = ["$element", "$log"];
-        return ContactController;
-    }());
-    var Contact = /** @class */ (function () {
-        function Contact() {
-            this.bindings = {
-                test: "=" //One Way Binding
-            };
-            this.controller = ContactController;
-            this.templateUrl = "components/contact.html";
-            this.transclude = false;
-        }
-        Contact.Factory = function () {
-            return new Contact;
-        };
-        return Contact;
-    }());
-    app.Contact = Contact;
-})(app || (app = {}));
-/// <reference path="../_all.ts" />
-var app;
-/// <reference path="../_all.ts" />
-(function (app) {
-    'use strict';
-    var DirectiveController = /** @class */ (function () {
-        function DirectiveController(scope, $log) {
+    class DirectiveController {
+        constructor(scope, $log) {
             this.scope = scope;
             scope.vm = this;
             this.$log = $log;
         }
-        DirectiveController.prototype.Echo = function () {
+        Echo() {
             console.log("Echo from directive's controller");
-        };
-        DirectiveController.prototype.ChangeText = function () {
+        }
+        ChangeText() {
             this.scope.text2 = 'This text from directive\'s controller';
             console.log(this.scope);
             this.$log.debug("Change from directive's controller");
-        };
-        DirectiveController.$inject = ["$scope", "$log"];
-        return DirectiveController;
-    }());
-    var Directive = /** @class */ (function () {
-        function Directive() {
-            var _this = this;
-            this.link = function (scope, element, attributes, controller) {
+        }
+    }
+    DirectiveController.$inject = ["$scope", "$log"];
+    class Directive {
+        constructor() {
+            this.link = (scope, element, attributes, controller) => {
                 console.log(scope);
-                _this.MyScope = scope;
+                this.MyScope = scope;
                 // this.scope = scope
                 // scope.vm.Echo()
                 scope.text2 = 'This text from scope2';
                 // scope.text = 'This text from scope2';
-                scope.self = _this;
+                scope.self = this;
                 scope.Echo = function () {
                     console.log("Echo from scope");
                 };
@@ -311,31 +139,40 @@ var app;
             this.controller = DirectiveController;
             this.controllerAs = "Ctrl";
             this.restrict = 'E';
-            this.template = "\n      <div style=\"text-align: center\"> \n        <p> binding text: {{text}} </p> \n        <p> this scope text: {{text2}} </p> \n        <p> binding text throught @: {{text3}} </p> \n        <a href=\"#\" ng-click=\"Echo()\">Echo from scope</a> <br>\n        <a href=\"#\" ng-click=\"self.Echo()\">Echo from this class</a> <br>\n        <button ng-click=\"Ctrl.ChangeText()\">Button1</button> <br>\n        <button ng-click=\"vm.ChangeText()\">Button2</button> <br>\n        <button ng-click=\"self.ChangeText()\">Button3</button> <br>\n      </div>";
+            this.template = `
+      <div style="text-align: center"> 
+        <p> binding text: {{text}} </p> 
+        <p> this scope text: {{text2}} </p> 
+        <p> binding text throught @: {{text3}} </p> 
+        <a href="#" ng-click="Echo()">Echo from scope</a> <br>
+        <a href="#" ng-click="self.Echo()">Echo from this class</a> <br>
+        <button ng-click="Ctrl.ChangeText()">Button1</button> <br>
+        <button ng-click="vm.ChangeText()">Button2</button> <br>
+        <button ng-click="self.ChangeText()">Button3</button> <br>
+      </div>`;
             this.scope = {
                 "text": "=",
                 "text3": "@"
             };
         }
-        Directive.prototype.Echo = function () {
+        Echo() {
             console.log("Echo from this class");
-        };
-        Directive.prototype.ChangeText = function () {
+        }
+        ChangeText() {
             this.MyScope.text2 = "This text from directive";
             console.log(this.MyScope);
             console.log("Change from directive");
-        };
-        Directive.Factory = function () {
+        }
+        static Factory() {
             // const directive = function($log: ng.ILocationService) {
             //   return new Directive($log);
             // }
-            var directive = function () {
+            const directive = function () {
                 return new Directive();
             };
             return directive;
-        };
-        return Directive;
-    }());
+        }
+    }
     app.Directive = Directive;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
@@ -343,8 +180,8 @@ var app;
 /// <reference path="../_all.ts" />
 (function (app) {
     'use strict';
-    var Controller = /** @class */ (function () {
-        function Controller($scope, $log) {
+    class Controller {
+        constructor($scope, $log) {
             this._$scope = $scope;
             this._$log = $log;
             this._$scope.event = this;
@@ -354,22 +191,21 @@ var app;
                 $log.debug("Add from scope");
             };
         }
-        Controller.prototype.Add = function () {
+        Add() {
             this._$scope.count++;
             this._$log.debug("Add from this class");
             $('.test').css('color', 'red');
-        };
-        Controller.$inject = ['$scope', '$log'];
-        return Controller;
-    }());
+        }
+    }
+    Controller.$inject = ['$scope', '$log'];
     app.Controller = Controller;
 })(app || (app = {}));
 /// <reference path="../_all.ts" />
 var app;
 (function (app) {
     'use strict';
-    var TinymceController = /** @class */ (function () {
-        function TinymceController($scope, $log, $timeout) {
+    class TinymceController {
+        constructor($scope, $log, $timeout) {
             this.$scope = $scope;
             this.$log = $log;
             this.$timeout = $timeout;
@@ -378,7 +214,7 @@ var app;
                 // re-init..
             }
             tinymce.remove();
-            $timeout(function () {
+            $timeout(() => {
                 tinymce.init({
                     // paste_enable_default_filters: false,
                     // paste_word_valid_elements: "b,strong,i,em,h1,h2,u,p,ol,ul,li,a[href],span,color,font-size,font-color,font-family,mark",
@@ -431,16 +267,41 @@ var app;
                 });
             }, 100);
         }
-        TinymceController.prototype.Submit = function () {
+        Submit() {
             console.log("Submit");
-        };
-        TinymceController.prototype.Reset = function () {
+        }
+        Reset() {
             console.log("Reset");
-        };
-        TinymceController.$inject = ['$scope', '$log', '$timeout'];
-        return TinymceController;
-    }());
+        }
+    }
+    TinymceController.$inject = ['$scope', '$log', '$timeout'];
     app.TinymceController = TinymceController;
+})(app || (app = {}));
+/// <reference path="../_all.ts" />
+var app;
+/// <reference path="../_all.ts" />
+(function (app) {
+    'use strict';
+    class ArticlesController {
+        constructor($scope, $log, $timeout, firebaseService) {
+            this.$scope = $scope;
+            this.$log = $log;
+            this.$timeout = $timeout;
+            $scope.self = this;
+            this.firebaseService = firebaseService;
+            $scope.posts = this.firebaseService.GetAllPosts();
+            // this.$scope.posts = this.firebaseService.GetAllPosts();
+            // console.log(this)
+        }
+        Submit() {
+            console.log("Submit");
+        }
+        Reset() {
+            console.log("Reset");
+        }
+    }
+    ArticlesController.$inject = ['$scope', '$log', '$timeout', 'firebaseService'];
+    app.ArticlesController = ArticlesController;
 })(app || (app = {}));
 /// <reference path="./_all.ts"/>
 var app;
@@ -450,6 +311,7 @@ var app;
     var myapp = angular.module('app', ['ngRoute', 'ui.router', 'firebase']);
     myapp.factory('firebaseService', app.FirebaseService.Factory());
     myapp.controller('TinyMceController', app.TinymceController);
+    myapp.controller('ArticlesController', app.ArticlesController);
     // myapp.component('index', app.Index.Factory());
     // myapp.component('articles', app.Articles.Factory());
     // myapp.component('about', app.About.Factory());
@@ -505,14 +367,11 @@ var app;
 /// <reference path='services/firebase.ts' />
 //##### components #####
 /// <reference path='components/component.ts' />
-/// <reference path='components/index.ts' />
-/// <reference path='components/articles.ts' />
-/// <reference path='components/about.ts' />
-/// <reference path='components/contact.ts' />
 //##### directives #####
 /// <reference path='directives/directive.ts' />
 //##### controllers #####
 /// <reference path='controllers/controller.ts' />
-/// <reference path='controllers/tinymceController.ts' />
+/// <reference path='controllers/tinymce.ts' />
+/// <reference path='controllers/articles.ts' />
 //##### app #####
 /// <reference path='main.ts' />
