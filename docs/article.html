@@ -46,8 +46,36 @@
 				<a class="mdl-navigation__link" href="contact.html">Contact</a>
 			</nav>
 		</div>
-		<main class="mdl-layout__content">
-			<ui-view></ui-view>
+		<main class="mdl-layout__content" ng-controller="ArticleController">
+			<div class="mdl-grid portfolio-max-width portfolio-contact">
+				<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+					<div class="mdl-card__supporting-text">
+						<form action="#" class="">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
+								<label class="mdl-textfield__label" for="Name">Title</label>
+								<span class="mdl-textfield__error">Letters and spaces only</span>
+							</div>
+							<!-- <div class="mdl-textfield mdl-js-textfield">
+								<textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
+								<label class="mdl-textfield__label" for="sample5">Text lines...</label>
+							</div> -->
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<textarea class="mdl-textfield__input" id="editor"></textarea>
+								<!-- <textarea class="mdl-textfield__input" type="text" rows="5" id="note"></textarea> -->
+								<!-- <label class="mdl-textfield__label" for="note">Enter note</label> -->
+							</div>
+							<p style="text-align: center;">
+								<!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+									Submit
+								</button> -->
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Reset()">Reset</button>
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Submit()">Submit</button>
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>		
 			<footer class="mdl-mini-footer My-footer">
 				Copyright &copy; 2018 Kevin Peng. All rights reserved.
 			</footer>
@@ -67,6 +95,8 @@
 	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>  
 	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+	<!-- TinyMCE -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.2/tinymce.min.js"></script>
 	<!-- App -->
 	<script src="app.js"></script>
 	

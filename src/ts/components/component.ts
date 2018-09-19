@@ -11,7 +11,7 @@ module app {
   class ComponentController {
     public test: string;
 
-    static $inject: string[] = ["$element", "$log", "firebaseService"];
+    static $inject: string[] = ["$element", "$log"];
 
     public firebaseService: any;
 

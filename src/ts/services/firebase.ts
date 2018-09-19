@@ -31,8 +31,13 @@ module app {
       })
     }
 
-    public GetAllPosts() {
+    public GetAllPosts(): any {
       return this.posts;
+    }
+
+    public GetPostByID(id: number): any {
+      console.log("ID = " + id)
+      return this.posts
     }
 
     public static Factory(): any {
