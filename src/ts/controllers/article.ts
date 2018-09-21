@@ -8,40 +8,31 @@ module app {
   interface IMyScope extends ng.IScope {
     self: any;
     post: any;
-    posts: any;
+    instance: any;
   }
 
   export class ArticleController implements ng.IController {
 
-    static $inject: string[] = ['$scope', '$log', '$timeout', '$firebaseArray'];
+    static $inject: string[] = ['$scope', '$log', '$timeout', 'FirebaseService'];
 
-    constructor(private $scope: IMyScope, private $log: ng.ILogService, private $timeout: ng.ITimeoutService, private $firebaseArray: AngularFireArrayService) {
+    constructor(private $scope: IMyScope, private $log: ng.ILogService, private $timeout: ng.ITimeoutService, private FirebaseService: any) {
       $scope.self = this;
-      const config = {
-        apiKey: "AIzaSyCaQnAY13Kt6aQJBD-QkOm2hymfwow85IM",
-        authDomain: "side-project-f8d62.firebaseapp.com",
-        databaseURL: "https://side-project-f8d62.firebaseio.com",
-        projectId: "side-project-f8d62",
-        storageBucket: "side-project-f8d62.appspot.com",
-        messagingSenderId: "618554667717"
-      };
-      firebase.initializeApp(config);
-      const ref = firebase.database().ref().child("Posts")
-      $scope.posts = $firebaseArray(ref);
-      $scope.posts.$watch(function(change: any) {
-        console.log(change);
-        $scope.post = $scope.posts.$getRecord( $scope.posts.$keyAt(myParam) )
-      })
 
-      let urlParams: any = new URLSearchParams(window.location.search);
-      let myParam: number = parseInt(urlParams.get('id'));
+      // Get Required Post's ID from URL
+      const urlParams: any = new URLSearchParams(window.location.search);
+      const ID: number = parseInt(urlParams.get('id'));
 
-      // $scope.posts.$loaded( (result: any) => {
-      //   $scope.post = result.$getRecord(result.$keyAt(myParam))
-      // })
+      $timeout(() => {
+        // Get Firebase Instance
+        $scope.instance = this.FirebaseService.GetInstance();
+        // Make Sure Instance already Get
+        $scope.instance.$loaded(function() {
+          $scope.post = FirebaseService.GetPostByID(ID);
+        })
+      }, 500)
      
       $scope.$watch('post', function(newValue, oldValue) {
-        console.log(newValue, oldValue);
+        console.log(newValue);
       })
 
       if(tinymce.execCommand('mceRemoveControl', false, 'editor')) {

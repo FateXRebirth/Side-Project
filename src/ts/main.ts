@@ -3,28 +3,17 @@ module app {
   'use strict'
 
   var myapp: ng.IModule = angular.module('app', ['ngRoute', 'ui.router', 'firebase'])
-  
-  myapp.factory('firebaseService', app.FirebaseService.Factory());
 
+  myapp.factory('FirebaseService', app.FirebaseService.Factory());
   myapp.controller('ArticleController', app.ArticleController)
-
   myapp.controller('ArticlesController', app.ArticlesController)
-
-  // myapp.component('index', app.Index.Factory());
-
-  // myapp.component('articles', app.Articles.Factory());
-
-  // myapp.component('about', app.About.Factory());
-
-  // myapp.component('contact', app.Contact.Factory());
+  
   
   // myapp.controller('controller', app.Controller)
 
   // myapp.directive('directive', app.Directive.Factory())
 
-  myapp.component('component', app.Component.Factory());
-
-  // myapp.component('simplemde', app.SimpleMDEComponent.Factory());
+  // myapp.component('component', app.Component.Factory());
 
   // myapp.config(['$routeProvider', function($routeProvider: ng.route.IRouteProvider) {
   //   $routeProvider
