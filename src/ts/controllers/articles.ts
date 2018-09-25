@@ -30,5 +30,14 @@ module app {
       })
     }
 
+    public Create() {
+      window.location.href = "article.html";
+    }
+
+    public DeletePost(post: any) {
+      this.$scope.instance.$remove(post);
+    }
+
+
   }
 }

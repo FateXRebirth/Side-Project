@@ -52,8 +52,9 @@
 					<div class="mdl-card__supporting-text">
 						<form action="#" class="">
 							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
-								<label class="mdl-textfield__label" for="Name">Title</label>
+								<h6>Title</h6>
+								<input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" name="title" value="{{post.title}}">
+								<!-- <label class="mdl-textfield__label" for="Name">Title</label> -->
 								<span class="mdl-textfield__error">Letters and spaces only</span>
 							</div>
 							<!-- <div class="mdl-textfield mdl-js-textfield">
@@ -69,8 +70,9 @@
 								<!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
 									Submit
 								</button> -->
-								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Reset()">Reset</button>
-								<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Submit()">Submit</button>
+								<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Reset()">Reset</button>
+								<button ng-if="post" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Submit()">Modify</button>
+								<button ng-if="!post" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="self.Create()">Create</button>
 							</p>
 						</form>
 					</div>
