@@ -57,29 +57,61 @@ module app {
             // max_chars: 3000, // max. allowed chars
             
             // without images_upload_url set, Upload tab won't show up
-            images_upload_url: 'https://www.abccar.com.tw/abcapi/upload/UploadAnyFile',
+            images_upload_url: 'https://side-project-f8d62.firebaseio.com',
             // override default upload handler to simulate successful upload
             images_upload_handler: function (blobInfo: any, success: any, failure: any) {
-              var xhr: any, formData: any;
-              xhr = new XMLHttpRequest();
-              xhr.withCredentials = false;
-              xhr.open('POST', 'https://www.abccar.com.tw/abcapi/upload/UploadAnyFile');
-              xhr.onload = function () {
-                var json;
-                if (xhr.status != 200) {
-                  failure('HTTP Error: ' + xhr.status);
-                  return;
-                }
-                json = JSON.parse(xhr.responseText);
-                // if (!json || typeof json.location != 'string') {
-                //     failure('Invalid JSON: ' + xhr.responseText);
-                //     return;
-                // }  
-                success(json.file.UploadUrl);
+              var metadata = {
+                contentType: 'image'
               };
-              formData = new FormData();
-              formData.append('file', blobInfo.blob(), blobInfo.filename());
-              xhr.send(formData);
+              var uploadTask = FirebaseService.GetStorageRef().child('images/' + blobInfo.blob().name).put(blobInfo.blob(), metadata);
+
+              uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+              function(snapshot: any) {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                  case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                  case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                }
+              }, function(error: any) {
+                failure(error);
+              }, function() {
+                // Upload completed successfully, now we can get the download URL
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL: any) {
+                  console.log('File available at', downloadURL);
+                  success(downloadURL);
+                });
+              });
+            },
+            setup: function (ed: any) {
+              ed.on('KeyDown', function (e: any) {
+                if ((e.keyCode == 8 || e.keyCode == 46) && ed.selection) { // delete & backspace keys
+                  let selectedNode = ed.selection.getNode(); // get the selected node (element) in the editor
+                  if (selectedNode && selectedNode.nodeName == 'IMG') {
+                      // console.log(selectedNode.src); // A callback that will let me invoke the deletion of the image on the server if appropriate for the image source.
+                      const src = selectedNode.src;
+                      let start = src.indexOf("/images") + 10;
+                      let part = src.substring(start);
+                      let end = part.indexOf("?");
+                      let filename = src.substring(start, start + end);
+                      // Create a reference to the file to delete
+                      var desertRef = FirebaseService.GetStorageRef().child('images/' + filename)
+                      // Delete the file
+                      desertRef.delete().then(function() {
+                        // File deleted successfully
+                        console.log(filename + ' has been deleted!');
+                      }).catch(function(error: any) {
+                        // Uh-oh, an error occurred!
+                        console.log(error);
+                      });   
+                  }
+                }
+              });
             },
             init_instance_callback: function () {
               if(ID) {

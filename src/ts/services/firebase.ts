@@ -6,6 +6,7 @@ module app {
 
   export class FirebaseService {
   
+    private storageRef: any;
     private instance: any;
     private ref: any;
     private posts: any;
@@ -14,12 +15,17 @@ module app {
       console.log("FirebaseService constructed")
       this.$http.get('config.json').then((resulut: any) => { 
         firebase.initializeApp(resulut.data);
+        this.storageRef = firebase.storage().ref();
         this.ref = firebase.database().ref().child("Posts")
         this.instance = this.$firebaseArray(this.ref);
         this.instance.$loaded( (result: any) => {
           this.posts = result;
         })
       })
+    }
+
+    public GetStorageRef(): any {
+      return this.storageRef;
     }
 
     public GetInstance(): any {

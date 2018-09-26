@@ -11,6 +11,7 @@ var app;
             console.log("FirebaseService constructed");
             this.$http.get('config.json').then(function (resulut) {
                 firebase.initializeApp(resulut.data);
+                _this.storageRef = firebase.storage().ref();
                 _this.ref = firebase.database().ref().child("Posts");
                 _this.instance = _this.$firebaseArray(_this.ref);
                 _this.instance.$loaded(function (result) {
@@ -18,6 +19,9 @@ var app;
                 });
             });
         }
+        FirebaseService.prototype.GetStorageRef = function () {
+            return this.storageRef;
+        };
         FirebaseService.prototype.GetInstance = function () {
             return this.instance;
         };
@@ -234,29 +238,60 @@ var app;
                         statusbar: false,
                         // max_chars: 3000, // max. allowed chars
                         // without images_upload_url set, Upload tab won't show up
-                        images_upload_url: 'https://www.abccar.com.tw/abcapi/upload/UploadAnyFile',
+                        images_upload_url: 'https://side-project-f8d62.firebaseio.com',
                         // override default upload handler to simulate successful upload
                         images_upload_handler: function (blobInfo, success, failure) {
-                            var xhr, formData;
-                            xhr = new XMLHttpRequest();
-                            xhr.withCredentials = false;
-                            xhr.open('POST', 'https://www.abccar.com.tw/abcapi/upload/UploadAnyFile');
-                            xhr.onload = function () {
-                                var json;
-                                if (xhr.status != 200) {
-                                    failure('HTTP Error: ' + xhr.status);
-                                    return;
-                                }
-                                json = JSON.parse(xhr.responseText);
-                                // if (!json || typeof json.location != 'string') {
-                                //     failure('Invalid JSON: ' + xhr.responseText);
-                                //     return;
-                                // }  
-                                success(json.file.UploadUrl);
+                            var metadata = {
+                                contentType: 'image'
                             };
-                            formData = new FormData();
-                            formData.append('file', blobInfo.blob(), blobInfo.filename());
-                            xhr.send(formData);
+                            var uploadTask = FirebaseService.GetStorageRef().child('images/' + blobInfo.blob().name).put(blobInfo.blob(), metadata);
+                            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                            function (snapshot) {
+                                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                console.log('Upload is ' + progress + '% done');
+                                switch (snapshot.state) {
+                                    case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                        console.log('Upload is paused');
+                                        break;
+                                    case firebase.storage.TaskState.RUNNING: // or 'running'
+                                        console.log('Upload is running');
+                                        break;
+                                }
+                            }, function (error) {
+                                failure(error);
+                            }, function () {
+                                // Upload completed successfully, now we can get the download URL
+                                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                                    console.log('File available at', downloadURL);
+                                    success(downloadURL);
+                                });
+                            });
+                        },
+                        setup: function (ed) {
+                            ed.on('KeyDown', function (e) {
+                                if ((e.keyCode == 8 || e.keyCode == 46) && ed.selection) { // delete & backspace keys
+                                    var selectedNode = ed.selection.getNode(); // get the selected node (element) in the editor
+                                    if (selectedNode && selectedNode.nodeName == 'IMG') {
+                                        // console.log(selectedNode.src); // A callback that will let me invoke the deletion of the image on the server if appropriate for the image source.
+                                        var src = selectedNode.src;
+                                        var start = src.indexOf("/images") + 10;
+                                        var part = src.substring(start);
+                                        var end = part.indexOf("?");
+                                        var filename_1 = src.substring(start, start + end);
+                                        // Create a reference to the file to delete
+                                        var desertRef = FirebaseService.GetStorageRef().child('images/' + filename_1);
+                                        // Delete the file
+                                        desertRef.delete().then(function () {
+                                            // File deleted successfully
+                                            console.log(filename_1 + ' has been deleted!');
+                                        }).catch(function (error) {
+                                            // Uh-oh, an error occurred!
+                                            console.log(error);
+                                        });
+                                    }
+                                }
+                            });
                         },
                         init_instance_callback: function () {
                             if (ID) {
