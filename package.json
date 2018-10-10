@@ -1,41 +1,18 @@
 {
-  "name": "project",
+  "name": "hello-next",
   "version": "1.0.0",
   "description": "",
-  "main": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/angular": "^1.6.49",
-    "@types/angular-route": "^1.7.0",
-    "@types/angular-ui-router": "^1.1.40",
-    "@types/angularfire": "^0.8.33",
-    "@types/jquery": "^3.3.5",
-    "@uirouter/angularjs": "^1.0.19",
-    "browser-sync": "^2.24.7",
-    "del": "^3.0.0",
-    "fs": "0.0.1-security",
-    "gulp": "4.0.0",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.9.4",
-    "gulp-concat": "^2.6.1",
-    "gulp-consolidate": "^0.2.0",
-    "gulp-env": "^0.4.0",
-    "gulp-header": "^2.0.5",
-    "gulp-iconfont": "^9.1.0",
-    "gulp-if": "^2.0.2",
-    "gulp-plumber": "^1.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "^5.0.0-alpha.3",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "gulp.spritesmith": "^6.9.0",
-    "merge-stream": "^1.0.1",
-    "typescript": "^2.9.2"
+    "next": "^6.1.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }

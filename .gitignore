@@ -3,8 +3,5 @@
 /**/.DS_Store
 
 package-lock.json
-
+.next
 node_modules
-
-# Firebase Configuration
-docs/config.json
